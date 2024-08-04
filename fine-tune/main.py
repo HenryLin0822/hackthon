@@ -9,7 +9,7 @@ with open('Daan_Park.json', 'rb') as f:
 
 print(response)
 
-file_id = 'file-G2FJxSkWfvUuo5lGbVXPiORn'
+file_id = ''
 
 response = client.fine_tuning.jobs.create(
     training_file=file_id,
