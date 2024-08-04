@@ -1,8 +1,8 @@
 import openai
 
-api_key = ''
+key = ''
 
-client = openai.Client(api_key = api_key)
+client = openai.Client(api_key = key)
 
 with open('Daan_Park.json', 'rb') as f:
     response = client.files.create(file=f, purpose='fine-tune')
