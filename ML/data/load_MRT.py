@@ -27,5 +27,7 @@ def load_ods(filename):
 # Usage
 filename = "202401_cht.ods"
 df = load_ods(filename)
-print(df)
+#print(df['松山機場'])
+#print(df['三重國小'])
+#print(df)
 
