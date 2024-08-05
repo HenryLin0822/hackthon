@@ -1,7 +1,7 @@
 
 import pandas as pd
 import json
-file_name = 'Daan Park.xlsx'
+file_name = '../Daan_Park.xlsx'
 df = pd.read_excel(file_name)
 #print(df['Prompt'])
 df['Response_string'] = df.apply(lambda x:f'''問題:{x['Prompt']}
