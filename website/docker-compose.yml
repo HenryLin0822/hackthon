@@ -1,0 +1,29 @@
+version: "3"
+services:
+  monopoly-mongodb:
+    image: mongo
+    expose:
+      - "27017"
+    networks:
+      - monopoly-mongodb
+  monopoly-web:
+    image: trix0831/cktfgsc-bank
+    expose:
+      - "2022"
+    depends_on:
+      - monopoly-mongodb
+    environment:
+      MONGO_URL: mongodb+srv://trix_831:Joseph831@cluster4trix.kfhexca.mongodb.net/?retryWrites=true&w=majority&appName=Cluster4trix
+      WEB_DOMAIN: cktfgsc-bank-z3zpvj7vba-de.a.run.app/
+    tty: true
+    stdin_open: true
+    networks:
+      - monopoly-web
+
+networks:
+  monopoly-mongodb:
+    external: true
+    name: eeinfo
+  monopoly-web:
+    external: true
+    name: eeinfo
