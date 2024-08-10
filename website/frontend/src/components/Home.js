@@ -2,6 +2,10 @@ import React from "react";
 import { Container, Box } from "@mui/material";
 // import image from "../banner.jpg";
 //put an great made after effect intro video!!
+import axios from "axios";
+
+
+
 const Home = () => {
   return (
     <Container component="main">
