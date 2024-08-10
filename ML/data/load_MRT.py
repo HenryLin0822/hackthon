@@ -24,7 +24,7 @@ def load_ods(filename):
     df = pd.DataFrame(df_dict)
     return df
 
-# Usage
+
 filename = "202401_cht.ods"
 df = load_ods(filename)
 #print(df['松山機場'])
