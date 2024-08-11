@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Container, Box } from "@mui/material";
 // import image from "../banner.jpg";
 //put an great made after effect intro video!!
 import axios from "axios";
-
+import { useState } from "react";
+import ShowData from "./ShowData";
 
 
 const Home = () => {
@@ -18,6 +19,9 @@ const Home = () => {
           alignItems: "center",
         }}
       />
+
+      <ShowData />
+
       <img
         src="/banner.jpg"
         alt="Avengers"

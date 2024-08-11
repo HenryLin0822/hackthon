@@ -8,7 +8,28 @@ import Pair from "../models/pair.js";
 import Effect from "../models/effect.js";
 import Broadcast from "../models/broadcast.js";
 import Resource from "../models/resource.js";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
 const router = express.Router();
+// Get the current file's directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Make the path to 'localfile.txt' relative
+const filePath = join(__dirname, 'localfile.txt');
+
+router.get('/getData', (req, res) => {
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+      if (err) {
+          res.status(500).send('Error reading file');
+          return;
+      }
+      res.status(200).json({ number: data.trim() });
+  });
+});
+
 
 const buffBuildings2 = async (building_1, building_2) => {
   for (let i = 0; i < 3; i++) {
