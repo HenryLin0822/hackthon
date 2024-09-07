@@ -28,6 +28,18 @@ const ShowDataA = () => {
           fontWeight: "bold", // 设置字体为粗体
         }}
       >
+        站點介紹：
+      </Typography>
+      <br/>
+      <Typography
+        variant="body"
+        gutterBottom
+        sx={{
+          marginTop: "20px",
+          marginBottom: "20px",
+          color: "white", // 设置字体颜色为白色
+        }}
+      >
         {data}
       </Typography>
     </div>

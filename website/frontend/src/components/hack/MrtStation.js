@@ -33,6 +33,16 @@ const MrtStation = () => {
     setSearchQuery(station); // Update the search query when a station is selected
   };
 
+  const getStationText = (station) => {
+    switch(station){
+      case "中正紀念堂":
+        return "今日進出站人次預測: 1000人";
+      default:
+        return "請選擇一個站點以查看今日進出站人次預測"
+
+    }
+  }
+
   return (
     <Container component="main" disableGutters>
       <Box
@@ -55,10 +65,10 @@ const MrtStation = () => {
             overflow: "hidden", // Hide overflow during typing effect
             // borderRight: ".05em solid black", // Cursor effect
             width: "fit-content", // Ensure it only takes up the necessary width
-            animation: `typing 5s , blink-caret 0.75s step-end infinite`,
+            animation: `typing 5s, blink-caret 0.75s step-end infinite`,
             textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // Add shadow to the text
             '@keyframes typing': {
-              from: { width: "1%" },
+              from: { width: "0%" },
               to: { width: "70%" }
             },
             '@keyframes blink-caret': {
@@ -67,6 +77,25 @@ const MrtStation = () => {
           }}
         >
           {selectedStation ? `${selectedStation}站` : "MRT Station"}
+        </Typography>
+        <br/>
+        <Typography 
+          variant="h3" // MUI 中有效的 variant，如 body1 或 body2
+          gutterBottom
+          sx={{
+            color: "#FFFFFF",
+            fontSize: "1rem", // 根据需要调整字体大小
+            fontWeight: "bold", // 粗体
+            letterSpacing: "0.1rem",
+            animation: `fadeIn 5s ease-in-out`, // 动画名称和持续时间
+            textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // 添加文字阴影效果
+            "@keyframes fadeIn": {
+              from: { opacity: 0 }, // 动画从透明开始
+              to: { opacity: 1 }, // 动画结束时完全可见
+            },
+          }}
+        >
+          {getStationText(selectedStation)}
         </Typography>
 
         <Grid container spacing={2}>
