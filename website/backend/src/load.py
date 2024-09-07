@@ -14,8 +14,8 @@ def load(filename):
         store.append(row)
     return store
 
-store = load("../大安森林公園.xlsx")
-print(store[0][0]) #Prompt
-print(store[0][1]) #Answer
-print(store[1][0]) #請推薦捷運大安森林公園站附近美食
-print(len(store)) #140
+#store = load("大安森林公園.xlsx")
+#print(store[0][0]) #Prompt
+#print(store[0][1]) #Answer
+#print(store[1][0]) #請推薦捷運大安森林公園站附近美食
+#print(len(store)) #140
