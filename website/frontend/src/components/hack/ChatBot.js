@@ -79,15 +79,27 @@ const ChatBot = () => {
 
     try {
         // Send request to the backend
-        const response = await axios.post('/chatbot', payload);
+        alert("in");
+        const response = await 
+            axios
+              .post('/chatbot', payload)
+              .then((res) => {
+                console.log("responseBBBBBBBBBBB");
+                console.log(res.data);
+                setMessages(prev => [...prev, { text: res.data, isUser: false }]);
+              })
+
+        alert("out");
         
         // Log and check the response from the backend
-        alert("Response:", response.data);
+        // alert("Response:", response.data);
+        console.log("responseAAAAAAAAAAAA");
+        // console.log(response.data);
 
         // Set the response message from the bot
-        // setMessages(prev => [...prev, { text: response.data.response, isUser: false }]);
+        // setMessages(prev => [...prev, { text: response.data, isUser: false }]);
     } catch (error) {
-        // console.error('Error sending message:', error);
+        console.error('Error sending message:', error);
         // setMessages(prev => [...prev, { text: 'Sorry, there was an error processing your request.', isUser: false }]);
     }
 

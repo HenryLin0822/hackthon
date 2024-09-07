@@ -31,7 +31,7 @@ const Home = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #7edaf7, #FFFFFF)",
+          // background: "linear-gradient(135deg, #7edaf7, #FFFFFF)",
         }}
       >
         <Typography
