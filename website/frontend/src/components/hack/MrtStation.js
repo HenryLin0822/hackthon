@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from "react";
-import { Container, Box, Typography, Grid, Paper, InputBase, Divider, TextField } from "@mui/material";
-import ShowData from "./ShowData";
-import GoogleMap from "./GoogleMap";
+import { useParams } from "react-router-dom"; // Import useParams to get route params
+import { Container, Box, Typography, Grid } from "@mui/material";
 import ShowDataA from "./ShowDataA";
 import ShowDataB from "./ShowDataB";
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
 import Chatbot from "./ChatBot";
 import TaipeiMRTMap from "./TaipeiMRTMap";
 
-const MrtStation = () => {
-  const [data, setData] = useState("");
-  const [selectedStation, setSelectedStation] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+const MRT_STATIONS = [
+  "淡水", "紅樹林", "竹圍", "關渡", "忠義", "復興崗", "北投", "新北投", "奇岩", "唭哩岸",
+  "石牌", "明德", "芝山", "士林", "劍潭", "圓山", "民權西路", "雙連", "中山", "台北車站",
+  "台大醫院", "中正紀念堂", "東門", "大安森林公園", "大安", "信義安和", "台北101/世貿", "象山",
+  // ... other MRT stations
+];
 
+const MrtStation = () => {
+  const { stationName } = useParams(); // Get the MRT station name from the route parameter
+  const [selectedStation, setSelectedStation] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(stationName || ""); // Initialize with stationName if it exists
+
+  // Set the selected station based on the route param
   useEffect(() => {
-    if (selectedStation) {
-      setSearchQuery(selectedStation.name);
+    if (stationName && MRT_STATIONS.includes(stationName)) {
+      setSelectedStation(stationName);
+      setSearchQuery(stationName);
+    } else {
+      setSelectedStation(null); // Clear if not found
     }
-  }, [selectedStation]);
+  }, [stationName]);
 
   const handleStationSelect = (station) => {
     setSelectedStation(station);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
+    setSearchQuery(station); // Update the search query when a station is selected
   };
 
   return (
@@ -62,10 +67,11 @@ const MrtStation = () => {
           }}
         >
           MrtStation
+        <Typography variant="h2" gutterBottom sx={{ marginTop: "20px", marginBottom: "20px" }}>
+          {selectedStation ? `${selectedStation} MRT Station` : "MRT Station"}
         </Typography>
 
         <Grid container spacing={2}>
-
           <Grid item xs={12} md={6}>
             <Box
               sx={{
@@ -107,6 +113,7 @@ const MrtStation = () => {
                   <ShowDataA />
                 </Box>
               </Grid>
+
               <Grid item xs={12}>
                 <Box
                   sx={{
@@ -121,13 +128,13 @@ const MrtStation = () => {
                     },
                     margin: '20px auto',
                     padding: '20px',
-                    backgroundColor: 'background.paper', // 使用调色板中的背景颜色
-                    borderRadius: '12px', // 圆角
-                    boxShadow: 3, // 阴影效果
-                    transition: 'transform 0.3s ease-in-out', // 鼠标悬停时的过渡效果
+                    backgroundColor: 'background.paper',
+                    borderRadius: '12px',
+                    boxShadow: 3,
+                    transition: 'transform 0.3s ease-in-out',
                     '&:hover': {
-                      transform: 'scale(1.05)', // 鼠标悬停时放大
-                      boxShadow: 10, // 增加阴影
+                      transform: 'scale(1.05)',
+                      boxShadow: 10,
                     },
                   }}
                 >
@@ -138,14 +145,7 @@ const MrtStation = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <Box
-              sx={{
-                marginTop: "20px",
-                marginBottom: "20px",
-                marginLeft: "10px",
-                marginRight: "10px",
-              }}
-            >
+            <Box sx={{ marginTop: "20px", marginBottom: "20px", marginLeft: "10px", marginRight: "10px" }}>
               <Chatbot />
             </Box>
           </Grid>
