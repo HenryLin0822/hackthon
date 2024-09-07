@@ -79,7 +79,7 @@ const GoogleMap = ({ searchQuery }) => {
         type="text"
         placeholder="Search for a place"
         style={{
-          width: '100%',
+          width: '98%',
           padding: '10px',
           borderRadius: '4px',
           marginBottom: '10px',
