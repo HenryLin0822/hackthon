@@ -7,23 +7,58 @@ import TaipeiMRTMap_red from "./TaipeiMRTMap_red";
 const MRTMapMerge = ({ onStationSelect }) => {
     //merge all the MRT lines together and they can be displayed in a horizontally scrollable display
     return (
-        <div style={{ display: "flex", overflowX: "auto", width: "100vw" }}>
-            <div style={{ minWidth: "100vw", flexShrink: 0 }}>
-                <TaipeiMRTMap_blue onStationSelect={onStationSelect} />
+        <div style={{
+            display: "flex", 
+            overflowX: "auto", 
+            width: "100vw", 
+            scrollSnapType: "x mandatory", 
+            scrollBehavior: "smooth",
+            scrollbarWidth: "none", // Optional: Hide scrollbar for cleaner look
+            msOverflowStyle: "none" // Optional: Hide scrollbar for IE/Edge
+          }}>
+            <div style={{
+              minWidth: "90vw", 
+              flexShrink: 0, 
+              scrollSnapAlign: "start", 
+              transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)"
+            }}>
+              <TaipeiMRTMap_blue onStationSelect={onStationSelect} />
             </div>
-            <div style={{ minWidth: "100vw", flexShrink: 0 }}>
-                <TaipeiMRTMap_brown onStationSelect={onStationSelect} />
+            <div style={{
+              minWidth: "90vw", 
+              flexShrink: 0, 
+              scrollSnapAlign: "start", 
+              transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)"
+            }}>
+              <TaipeiMRTMap_brown onStationSelect={onStationSelect} />
             </div>
-            <div style={{ minWidth: "100vw", flexShrink: 0 }}>
-                <TaipeiMRTMap_green onStationSelect={onStationSelect} />
+            <div style={{
+              minWidth: "90vw", 
+              flexShrink: 0, 
+              scrollSnapAlign: "start", 
+              transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)"
+            }}>
+              <TaipeiMRTMap_green onStationSelect={onStationSelect} />
             </div>
-            <div style={{ minWidth: "100vw", flexShrink: 0 }}>
-                <TaipeiMRTMap_yellow onStationSelect={onStationSelect} />
+            <div style={{
+              minWidth: "90vw", 
+              flexShrink: 0, 
+              scrollSnapAlign: "start", 
+              transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)"
+            }}>
+              <TaipeiMRTMap_yellow onStationSelect={onStationSelect} />
             </div>
-            <div style={{ minWidth: "100vw", flexShrink: 0 }}>
-                <TaipeiMRTMap_red onStationSelect={onStationSelect} />
+            <div style={{
+              minWidth: "90vw", 
+              flexShrink: 0, 
+              scrollSnapAlign: "start", 
+              transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)"
+            }}>
+              <TaipeiMRTMap_red onStationSelect={onStationSelect} />
             </div>
-        </div>
+          </div>
+          
+          
 
     );
     

@@ -161,8 +161,8 @@ const Home = () => {
           <Grid item xs={12} md={6}>
             <Box
               sx={{
-                marginRight: "20px",
-                marginLeft: "20px",
+                marginRight: "10px",
+                marginLeft: "10px",
                 height: "400px",
               }}
             >
