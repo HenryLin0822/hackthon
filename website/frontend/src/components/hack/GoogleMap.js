@@ -90,7 +90,7 @@ const GoogleMap = ({ searchQuery }) => {
         ref={googleMapRef}
         style={{
           width: '100%',
-          height: '500px',
+          height: '300px',
           borderRadius: '16px', // Rounded corners
           boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)', // Soft shadow
           overflow: 'hidden', // Ensures content fits within rounded corners

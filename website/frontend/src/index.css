@@ -39,7 +39,7 @@ nav {
   position: absolute;
   backface-visibility: hidden;
   opacity: 0;
-  transform: scale(1.2) rotate(15deg);
+  transform: scale(1.4) rotate(15deg);
   animation: animate 20s infinite;
 }
 

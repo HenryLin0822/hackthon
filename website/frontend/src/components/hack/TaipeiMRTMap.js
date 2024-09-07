@@ -1,3 +1,4 @@
+import { blue } from '@mui/material/colors';
 import React, { useState } from 'react';
 
 const stations = [
@@ -31,17 +32,17 @@ const stations = [
     { name: '象山', x: 50, y: 190, line: '#ff6b6b' },
 ];
 
-const TaipeiMRTMap = () => {
+const TaipeiMRTMap = ({ onStationSelect }) => {
     const [selectedStation, setSelectedStation] = useState(null);
 
     const handleStationClick = (station) => {
         setSelectedStation(station);
+        onStationSelect(station); // Call the callback function with the selected station
     };
 
     return (
         <div className="relative w-full h-full bg-blue-100 p-4 rounded-lg">
             <svg width="100%" height="100%" viewBox="0 0 450 490">
-                {/* Draw the line first, behind the stations */}
                 <path
                     d="M50 50 H350 Q400 50 400 100 V440 H50 V190"
                     fill="none"
@@ -51,38 +52,46 @@ const TaipeiMRTMap = () => {
                     strokeLinejoin="round"
                 />
 
-                {stations.map((station, index) => (
-                    <g key={index} onClick={() => handleStationClick(station)}>
-                        <circle
-                            cx={station.x}
-                            cy={station.y}
-                            r="30"
-                            fill={station.line}
-                            stroke="white"
-                            strokeWidth="3"
-                            className="cursor-pointer hover:stroke-yellow-300 transition-all duration-200"
-                        />
-                        <text
-                            x={station.x}
-                            y={station.y}
-                            fontSize="10"
-                            fill="white"
-                            textAnchor="middle"
-                            dominantBaseline="middle"
-                            fontWeight="bold"
-                            className="pointer-events-none"
+                {stations.map((station, index) => {
+                    const isSelected = selectedStation?.name === station.name;
+
+                    return (
+                        <g
+                            key={index}
+                            onClick={() => handleStationClick(station)}
                         >
-                            {station.name}
-                        </text>
-                    </g>
-                ))}
+                            <circle
+                                cx={station.x}
+                                cy={station.y}
+                                r="18"
+                                fill={isSelected ? blue[500] : station.line} // Use blue if selected, otherwise use the station's line color
+                                stroke="white"
+                                strokeWidth="2"
+                                className="cursor-pointer hover:stroke-yellow-300 transition-all duration-200"
+                            />
+
+                            <text
+                                x={station.x}
+                                y={station.y}
+                                fontSize="10"
+                                fill="white"
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                fontWeight="bold"
+                                className="pointer-events-none"
+                            >
+                                {station.name}
+                            </text>
+                        </g>
+                    );
+                })}
             </svg>
-            {selectedStation && (
+            {/* {selectedStation && (
                 <div className="absolute top-4 left-4 bg-white p-4 rounded shadow">
                     <h2 className="text-lg font-bold">{selectedStation.name}</h2>
                     <p>Line: Red Line</p>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
