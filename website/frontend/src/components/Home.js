@@ -1,11 +1,16 @@
-import React from "react";
-import { Container, Box, Typography, Grid, Paper} from "@mui/material";
+import React, {useState} from "react";
+import { Container, Box, Typography, Grid, Paper, InputBase, Divider} from "@mui/material";
 import ShowData from "./hack/ShowData";
 import GoogleMap from "./hack/GoogleMap";
 import ShowDataA from "./hack/ShowDataA";
 import ShowDataB from "./hack/ShowDataB";
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import Chatbot from "./hack/ChatBot";
 
 const Home = () => {
+  const [data, setData] = useState("");
+
   return (
     <Container component="main" disableGutters>
       <Box
@@ -19,11 +24,44 @@ const Home = () => {
         }}
       >
 
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h2" gutterBottom
+          sx ={{
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
           EAT SHIT
         </Typography>
 
+        
+
         <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Paper
+              component="form"
+              sx={{ 
+                p: '2px 4px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                marginRight: "40px",
+                marginLeft: "40px",
+                borderRadius: "32px",
+                marginTop: "30px",
+                marginBottom: "50px", 
+              }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Search Google Maps"
+                inputProps={{ 'aria-label': 'search google maps' }}
+              />
+              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+                <SearchIcon />
+              </IconButton>
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            </Paper>
+          </Grid>
+
           <Grid item xs={12}>
             <Box
               sx={{
@@ -39,7 +77,7 @@ const Home = () => {
           <Grid item xs={6}>
             <Box
               sx={{
-                background: "linear-gradient(135deg, #FFFFFF, #7edaf7)",
+                background: "#7edaf7",
                 marginTop: "5px",
                 marginLeft: "10px",
                 marginRight: "3px",
@@ -63,7 +101,7 @@ const Home = () => {
           <Grid item xs={6}>
             <Box
                 sx={{
-                  background: "linear-gradient(135deg, #FFFFFF, #7edaf7)",
+                  background: "#7edaf7",
                   marginTop: "5px",
                   marginLeft: "3px",
                   marginRight: "10px",
@@ -82,6 +120,10 @@ const Home = () => {
               >
                 <ShowDataB/>
               </Box>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Chatbot/>
           </Grid>
         </Grid>
         
