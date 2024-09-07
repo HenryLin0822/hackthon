@@ -80,11 +80,11 @@ const Home = () => {
             whiteSpace: "nowrap",
             overflow: "hidden",
             width: "fit-content",
-            animation: `typing 5s , blink-caret 0.75s step-end infinite`,
+            animation: `typing 4s , blink-caret 0.75s step-end infinite`,
             textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)",
             '@keyframes typing': {
-              from: { width: "1%" },
-              to: { width: "75%" }
+              from: { width: "0%" },
+              to: { width: "65%" }
             },
             '@keyframes blink-caret': {
               '50%': { borderColor: "transparent" }
