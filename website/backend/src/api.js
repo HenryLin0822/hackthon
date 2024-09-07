@@ -55,178 +55,39 @@ router.get('/getDataB', (req, res) => {
 });
 
 
-router.post("/chatbot", async (req, res) => {
+router.post('/chatbot', async (req, res) => {
   console.log("fuckYUUERTERETRTERTYTR");
 
   const { question, stationName } = req.body;
 
-  // Escape the input to prevent command injection
-  const escapedQuestion = question.replace(/["'\\]/g, '');
-  const escapedStation = stationName.replace(/["'\\]/g, '');
+  // // Escape the input to prevent command injection
+  // const escapedQuestion = question.replace(/["'\\]/g, '');
+  // const escapedStation = stationName.replace(/["'\\]/g, '');
 
   // Run the Python script with the question and station name as arguments
-  exec(`python3 inference.py "${escapedQuestion}" "${escapedStation}"`, (error, stdout, stderr) => {
-    if (error) {
-      console.error(`Error executing Python script: ${error.message}`);
-      return res.status(500).json({ error: "Internal server error" });
-    }
+  // exec(`python3 inference.py "${question}" "${stationName}"`, (error, stdout, stderr) => {
+  //   if (error) {
+  //     console.error(`Error executing Python script: ${error.message}`);
+  //     return res.status(500).json({ error: "Internal server error" });
+  //   }
 
-    // Ignore stderr warnings unless critical
-    if (stderr && !stderr.includes('check_gcp_environment')) {
-      console.error(`Error in Python script: ${stderr}`);
-      return res.status(500).json({ error: "Internal server error" });
-    }
+  //   // Ignore stderr warnings unless critical
+  //   if (stderr && !stderr.includes('check_gcp_environment')) {
+  //     console.error(`Error in Python script: ${stderr}`);
+  //     return res.status(500).json({ error: "Internal server error" });
+  //   }
 
-    // Read the response from the file
-    fs.readFile('response.txt', 'utf8', (err, data) => {
-      if (err) {
-        console.error(`Error reading response file: ${err}`);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-      res.json({ response: data });
-    });
-  });
+  //   // Read the response from the file
+  //   fs.readFile('response.txt', 'utf8', (err, data) => {
+  //     if (err) {
+  //       console.error(`Error reading response file: ${err}`);
+  //       return res.status(500).json({ error: "Internal server error" });
+  //     }
+  //     res.json({ response: data });
+  //   });
+  // });
 });
 
-const buffBuildings2 = async (building_1, building_2) => {
-  for (let i = 0; i < 3; i++) {
-    if (building_1.buffed !== 1) building_1.rent[i] *= 1.5;
-    if (building_2.buffed !== 1) building_2.rent[i] *= 1.5;
-  }
-  building_1.buffed = 1;
-  building_2.buffed = 1;
-  await building_1.save();
-  await building_2.save();
-};
-
-const debuffBuildings2 = async (building_1, building_2) => {
-  building_1.buffed = 0;
-  building_2.buffed = 0;
-  for (let i = 0; i < 3; i++) {
-    building_1.rent[i] /= 1.5;
-    building_2.rent[i] /= 1.5;
-  }
-
-  await building_1.save();
-  await building_2.save();
-};
-
-const buffBuildings3 = async (building_1, building_2, building_3) => {
-  for (let i = 0; i < 3; i++) {
-    if (building_1.buffed === 1) building_1.rent[i] /= 1.5;
-    if (building_2.buffed === 1) building_2.rent[i] /= 1.5;
-    if (building_3.buffed === 1) building_3.rent[i] /= 1.5;
-    building_1.rent[i] *= 2;
-    building_2.rent[i] *= 2;
-    building_3.rent[i] *= 2;
-  }
-  building_1.buffed = 2;
-  building_2.buffed = 2;
-  building_3.buffed = 2;
-  await building_1.save();
-  await building_2.save();
-  await building_3.save();
-};
-
-const debuffBuildings3 = async (building_1, building_2, building_3) => {
-  building_1.buffed = 0;
-  building_2.buffed = 0;
-  building_3.buffed = 0;
-  for (let i = 0; i < 3; i++) {
-    building_1.rent[i] /= 2;
-    building_2.rent[i] /= 2;
-    building_3.rent[i] /= 2;
-  }
-
-  // await building_1.save();
-  // await building_2.save();
-  // await building_3.save();
-};
-
-const buffings2 = async (buildings, num1, num2) => {
-  if (buildings[num1].owner === buildings[num2].owner) {
-    console.log("0");
-    buffBuildings2(buildings[num1], buildings[num2]);
-  } else if (
-    buildings[num1].buffed === 1 &&
-    buildings[num1].owner !== buildings[num2].owner
-  ) {
-    debuffBuildings2(buildings[num1], buildings[num2]);
-  }
-};
-
-const buffings3 = async (buildings, num1, num2, num3) => {
-  if (
-    buildings[num1].owner === buildings[num2].owner &&
-    buildings[num2].owner === buildings[num3].owner
-  ) {
-    console.log("1");
-    buffBuildings3(buildings[num1], buildings[num2], buildings[num3]);
-  } else if (
-    buildings[num1].owner === buildings[num2].owner &&
-    buildings[num2].owner !== buildings[num3].owner &&
-    buildings[num1].owner !== 0
-  ) {
-    console.log("2");
-    if (buildings[num1].buffed === 2) {
-      debuffBuildings3(buildings[num1], buildings[num2], buildings[num3]);
-    }
-    if (buildings[num3].buffed === 1) {
-      buildings[num3].buffed = 0;
-      for (let i = 0; i < 3; i++) {
-        buildings[num3].rent[i] /= 1.5;
-      }
-    }
-    buffBuildings2(buildings[num1], buildings[num2]);
-    await buildings[num3].save();
-  } else if (
-    buildings[num2].owner === buildings[num3].owner &&
-    buildings[num1].owner !== buildings[num2].owner &&
-    buildings[num2].owner !== 0
-  ) {
-    console.log("3");
-    if (buildings[num2].buffed === 2) {
-      debuffBuildings3(buildings[num1], buildings[num2], buildings[num3]);
-    }
-    if (buildings[num1].buffed === 1) {
-      buildings[num1].buffed = 0;
-      for (let i = 0; i < 3; i++) {
-        buildings[num1].rent[i] /= 1.5;
-      }
-    }
-    buffBuildings2(buildings[num2], buildings[num3]);
-    await buildings[num1].save();
-  } else if (
-    buildings[num1].owner === buildings[num3].owner &&
-    buildings[num2].owner !== buildings[num1].owner &&
-    buildings[num1].owner !== 0
-  ) {
-    console.log("4");
-    if (buildings[num1].buffed === 2) {
-      debuffBuildings3(buildings[num1], buildings[num2], buildings[num3]);
-    }
-    if (buildings[num2].buffed === 1) {
-      buildings[num2].buffed = 0;
-      for (let i = 0; i < 3; i++) {
-        buildings[num2].rent[i] /= 1.5;
-      }
-    }
-    buffBuildings2(buildings[num1], buildings[num3]);
-    await buildings[num2].save();
-  } else if (
-    buildings[num1].owner !== buildings[num2].owner &&
-    buildings[num2].owner !== buildings[num3].owner
-  ) {
-    console.log("5");
-    if (buildings[num1].buffed === 1 && buildings[num2].buffed === 1) {
-      debuffBuildings2(buildings[num1], buildings[num2]);
-    } else if (buildings[num2].buffed === 1 && buildings[num3].buffed === 1) {
-      debuffBuildings2(buildings[num2], buildings[num3]);
-    } else if (buildings[num1].buffed === 1 && buildings[num3].buffed === 1) {
-      debuffBuildings2(buildings[num1], buildings[num3]);
-    }
-  }
-};
 
 router.get("/", (req, res) => {
   res.json({ a: 1, b: 2 });
@@ -275,23 +136,6 @@ async function deleteTimeoutNotification() {
   }
 }
 
-// router
-//   .get("/phase", async (req, res) => {
-//     const phase = await Pair.findOne({ key: "phase" });
-//     res.json({ phase: phase.value }).status(200);
-//   })
-//   .post("/phase", async (req, res) => {
-//     const phase = await Pair.findOne({ key: "phase" });
-//     phase.value = req.body.phase;
-//     await phase.save();
-//     res.json({ phase: phase.value }).status(200);
-//     req.io.emit("broadcast", {
-//       title: `Phase Changed to ${phase.value}`,
-//       description: "",
-//       level: 0,
-//     });
-//   });
-
 router.get("/team", async (req, res) => {
   const teams = await Team.find().sort({ teamname: 1 });
   res.json(teams).status(200);
@@ -302,6 +146,11 @@ router.get("/teamRich", async (req, res) => {
   const team = teams[0];
   console.log(team);
   res.json(team).status(200);
+});
+
+router.post("/chatCheck", async(req, res) =>{
+  console.log("hellio");
+  res.json("Success").status(200);
 });
 
 router.post("/checkPropertyCost", async (req, res) => {
@@ -366,6 +215,7 @@ router.get("/resourceInfo", async (req, res) => {
 });
 
 router.post("/sellResource", async (req, res) => {
+  console.log("inSELL");
   const { teamId, resourceId, number, mode } = req.body;
 
   const team = await Team.find({ id: teamId });
@@ -413,6 +263,8 @@ router.get("/allEvents", async (req, res) => {
 });
 
 router.post("/interest", async (req, res) => {
+  alert("inSELL");
+
   try {
     console.log("interest");
 

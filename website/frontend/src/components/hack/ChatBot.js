@@ -18,12 +18,15 @@ const Chatbot = () => {
 
         try {
             alert("firsy");
-            const response = await 
-                axios
-                    .post('/chatbot', { question: input, stationName });
+            const payload = { 
+                question: input, 
+                stationName: stationName 
+            };
+
+            await axios.post("/chatCheck", payload);
 
             // Add bot response to chat
-            setMessages(prev => [...prev, { text: response.data.response, isUser: false }]);
+            // setMessages(prev => [...prev, { text: response.data.response, isUser: false }]);
         } catch (error) {
             alert("error");
             console.error('Error sending message:', error);
