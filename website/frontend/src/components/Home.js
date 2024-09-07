@@ -2,6 +2,8 @@ import React from "react";
 import { Container, Box, Typography, Grid, Paper} from "@mui/material";
 import ShowData from "./hack/ShowData";
 import GoogleMap from "./hack/GoogleMap";
+import ShowDataA from "./hack/ShowDataA";
+import ShowDataB from "./hack/ShowDataB";
 
 const Home = () => {
   return (
@@ -13,11 +15,11 @@ const Home = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(180deg, #7edaf7, #FFFFFF)",
+          background: "linear-gradient(135deg, #7edaf7, #FFFFFF)",
         }}
       >
 
-        <Typography variant="h2" gutterBottom>
+        <Typography variant="h3" gutterBottom>
           EAT SHIT
         </Typography>
 
@@ -25,15 +27,8 @@ const Home = () => {
           <Grid item xs={12}>
             <Box
               sx={{
-                background: "#ADD8E6", // Light blue background
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "#fff",          // Text color inside the box
-                fontSize: "24px",       // Font size
-                borderRadius: "16px",   // Rounded corners
-                boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)", // Soft shadow effect
-                margin: "20px 0",      // Margin to create space around the Box
+                marginRight: "10px",
+                marginLeft: "10px",
               }}
             >
               <GoogleMap/>
@@ -44,33 +39,52 @@ const Home = () => {
           <Grid item xs={6}>
             <Box
               sx={{
-                background: "#ADD8E6", // Light blue background
+                background: "linear-gradient(135deg, #FFFFFF, #7edaf7)",
+                marginTop: "5px",
+                marginLeft: "10px",
+                marginRight: "3px",
+                boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Soft shadow
+                height: "50vh",
+                width: "auto", // Adjust width as needed
+                maxWidth: "100%", // Prevent overflow beyond parent container
+                overflowY: "scroll", // Enable vertical scrolling
+                scrollbarWidth: "none", // For Firefox
+                msOverflowStyle: "none", // For Internet Explorer and Edge
+                "&::-webkit-scrollbar": {
+                  display: "none" // For WebKit browsers (Chrome, Safari)
+                },
+                borderRadius: "8px", // Rounded corners
               }}
             >
-              Content inside the Box
+              <ShowDataA/>
             </Box>
+
           </Grid>
           <Grid item xs={6}>
             <Box
                 sx={{
-                  background: "#abc324", // Light blue background
+                  background: "linear-gradient(135deg, #FFFFFF, #7edaf7)",
+                  marginTop: "5px",
+                  marginLeft: "3px",
+                  marginRight: "10px",
+                  boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Soft shadow
+                  height: "50vh",
+                  width: "auto", // Adjust width as needed
+                  maxWidth: "100%", // Prevent overflow beyond parent container
+                  overflowY: "scroll", // Enable vertical scrolling
+                  scrollbarWidth: "none", // For Firefox
+                  msOverflowStyle: "none", // For Internet Explorer and Edge
+                  "&::-webkit-scrollbar": {
+                    display: "none" // For WebKit browsers (Chrome, Safari)
+                  },
+                  borderRadius: "8px", // Rounded corners
                 }}
               >
-                Content inside the Box
+                <ShowDataB/>
               </Box>
           </Grid>
         </Grid>
         
-        <ShowData />
-        <img
-          src="/banner.jpg"
-          alt="Avengers"
-          style={{
-            maxWidth: "100%",
-            userSelect: "none",
-            marginTop: "20px",
-          }}
-        />
         <img
           src="/banner.jpg"
           alt="Avengers"

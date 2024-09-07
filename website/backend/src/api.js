@@ -18,9 +18,31 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 // Make the path to 'localfile.txt' relative
-const filePath = join(__dirname, 'localfile.txt');
 
 router.get('/getData', (req, res) => {
+  const filePath = join(__dirname, 'localfile.txt');
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+      if (err) {
+          res.status(500).send('Error reading file');
+          return;
+      }
+      res.status(200).json({ number: data.trim() });
+  });
+});
+
+router.get('/getDataA', (req, res) => {
+  const filePath = join(__dirname, '/data/a.txt');
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+      if (err) {
+          res.status(500).send('Error reading file');
+          return;
+      }
+      res.status(200).json({ number: data.trim() });
+  });
+});
+
+router.get('/getDataB', (req, res) => {
+  const filePath = join(__dirname, '/data/b.txt');
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
       res.status(500).send('Error reading file');
