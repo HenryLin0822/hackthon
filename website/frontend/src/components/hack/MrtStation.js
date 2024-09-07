@@ -67,6 +67,7 @@ const MrtStation = () => {
           }}
         >
           MrtStation
+        </Typography>
         <Typography variant="h2" gutterBottom sx={{ marginTop: "20px", marginBottom: "20px" }}>
           {selectedStation ? `${selectedStation} MRT Station` : "MRT Station"}
         </Typography>
