@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import ChatIcon from '@mui/icons-material/Chat';
-import CloseIcon from '@mui/icons-material/Close';
+import MinimizeIcon from '@mui/icons-material/Minimize';
 import axios from "../axios";
 
 const styles = {
@@ -12,18 +12,30 @@ const styles = {
         position: 'fixed',
         bottom: '20px',
         right: '20px',
-        width: '350px',
-        height: '500px',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: '8px',
         overflow: 'hidden',
         boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-        transition: 'all 0.3s ease',
+        transition: 'all 0.5s ease',
+        zIndex: 1000,
+    },
+    expandedChat: {
+        width: 'calc(100% - 40px)',
+        height: '80vh',
+        maxWidth: '1200px',
+    },
+    shrinkingChat: {
+        width: '60px',
+        height: '60px',
+        borderRadius: '30px',
     },
     minimizedChat: {
         width: '60px',
         height: '60px',
+        borderRadius: '30px',
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
     },
     messagesContainer: {
         flexGrow: 1,
@@ -32,6 +44,11 @@ const styles = {
         backgroundColor: '#f5f5f5',
         display: 'flex',
         flexDirection: 'column-reverse',
+        opacity: 0,
+        transition: 'opacity 0.3s ease',
+    },
+    visibleMessages: {
+        opacity: 1,
     },
     messageWrapper: {
         display: 'flex',
@@ -64,6 +81,11 @@ const styles = {
         padding: '8px',
         backgroundColor: 'white',
         borderTop: '1px solid rgba(0, 0, 0, 0.12)',
+        opacity: 0,
+        transition: 'opacity 0.3s ease',
+    },
+    visibleInputs: {
+        opacity: 1,
     },
     input: {
         marginRight: '8px',
@@ -76,6 +98,22 @@ const styles = {
         position: 'absolute',
         top: '10px',
         right: '10px',
+        minWidth: '30px',
+        width: '30px',
+        height: '30px',
+        padding: 0,
+        opacity: 0,
+        transition: 'opacity 0.3s ease',
+    },
+    visibleMinimize: {
+        opacity: 1,
+    },
+    chatIcon: {
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        transition: 'opacity 0.3s ease',
+        zIndex: 1000,
     },
 };
 
@@ -83,7 +121,8 @@ const ChatBot = () => {
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState([]);
     const [stationName, setStationName] = useState('');
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [chatState, setChatState] = useState('minimized'); // 'minimized', 'expanding', 'expanded', 'shrinking'
+    const [isContentVisible, setIsContentVisible] = useState(false);
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -103,84 +142,142 @@ const ChatBot = () => {
 
         try {
             const response = await axios.post('/chatbot', payload);
-            const res = await axios.get("/getData");
-            setMessages(prev => [{ text: res.data.number, isUser: false }, ...prev]);
+            alert("Response: " + JSON.stringify(response.data));
         } catch (error) {
             console.error('Error sending message:', error);
         }
+
+        axios
+            .get("/getData")
+            .then((res) => {
+                setMessages(prev => [{ text: res.data.number, isUser: false }, ...prev]);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
 
         setInput('');
     };
 
     const toggleChat = () => {
-        setIsExpanded(!isExpanded);
+        if (chatState === 'expanded') {
+            setIsContentVisible(false);
+            setChatState('shrinking');
+            setTimeout(() => {
+                setChatState('minimized');
+            }, 500);
+        } else if (chatState === 'minimized') {
+            setChatState('expanding');
+            setTimeout(() => {
+                setChatState('expanded');
+                setIsContentVisible(true);
+            }, 50);
+        }
+    };
+
+    const chatStyle = () => {
+        switch (chatState) {
+            case 'expanded':
+                return {...styles.chatContainer, ...styles.expandedChat};
+            case 'shrinking':
+                return {...styles.chatContainer, ...styles.shrinkingChat};
+            case 'minimized':
+                return {...styles.chatContainer, ...styles.minimizedChat};
+            default:
+                return styles.chatContainer;
+        }
     };
 
     return (
-        <Box>
-            {!isExpanded && (
-                <Fab color="primary" aria-label="chat" onClick={toggleChat} sx={{ position: 'fixed', bottom: '20px', right: '20px' }}>
+        <>
+            <Paper sx={chatStyle()} elevation={chatState !== 'minimized' ? 3 : 0}>
+                {chatState !== 'minimized' && (
+                    <>
+                        <Button 
+                            onClick={toggleChat} 
+                            sx={{
+                                ...styles.minimizeButton,
+                                ...(isContentVisible ? styles.visibleMinimize : {})
+                            }}
+                        >
+                            <MinimizeIcon fontSize="small" />
+                        </Button>
+                        <Box 
+                            sx={{
+                                ...styles.messagesContainer,
+                                ...(isContentVisible ? styles.visibleMessages : {})
+                            }}
+                        >
+                            <div ref={messagesEndRef} />
+                            {messages.map((message, index) => (
+                                <Box
+                                    key={index}
+                                    sx={styles.messageWrapper}
+                                    flexDirection={message.isUser ? 'row-reverse' : 'row'}
+                                >
+                                    <Avatar sx={styles.avatar}>
+                                        {message.isUser ? <PersonIcon /> : <SmartToyIcon />}
+                                    </Avatar>
+                                    <Box
+                                        sx={{
+                                            ...styles.message,
+                                            ...(message.isUser ? styles.userMessage : styles.botMessage),
+                                        }}
+                                    >
+                                        <Typography variant="body2">{message.text}</Typography>
+                                    </Box>
+                                </Box>
+                            ))}
+                        </Box>
+                        <Box 
+                            sx={{
+                                ...styles.inputContainer,
+                                ...(isContentVisible ? styles.visibleInputs : {})
+                            }} 
+                            component="form" 
+                            onSubmit={handleSubmit}
+                        >
+                            <TextField
+                                size="small"
+                                variant="outlined"
+                                value={stationName}
+                                onChange={(e) => setStationName(e.target.value)}
+                                placeholder="Station name"
+                                sx={styles.input}
+                            />
+                            <TextField
+                                size="small"
+                                fullWidth
+                                variant="outlined"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                placeholder="Type your message..."
+                                sx={styles.input}
+                            />
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                sx={styles.sendButton}
+                            >
+                                <SendIcon fontSize="small" />
+                            </Button>
+                        </Box>
+                    </>
+                )}
+            </Paper>
+            {chatState === 'minimized' && (
+                <Fab 
+                    color="primary" 
+                    aria-label="chat" 
+                    onClick={toggleChat} 
+                    sx={styles.chatIcon}
+                >
                     <ChatIcon />
                 </Fab>
             )}
-            {isExpanded && (
-                <Paper sx={{...styles.chatContainer, ...(isExpanded ? {} : styles.minimizedChat)}} elevation={3}>
-                    <Button onClick={toggleChat} sx={styles.minimizeButton}>
-                        <CloseIcon />
-                    </Button>
-                    <Box sx={styles.messagesContainer}>
-                        <div ref={messagesEndRef} />
-                        {messages.map((message, index) => (
-                            <Box
-                                key={index}
-                                sx={styles.messageWrapper}
-                                flexDirection={message.isUser ? 'row-reverse' : 'row'}
-                            >
-                                <Avatar sx={styles.avatar}>
-                                    {message.isUser ? <PersonIcon /> : <SmartToyIcon />}
-                                </Avatar>
-                                <Box
-                                    sx={{
-                                        ...styles.message,
-                                        ...(message.isUser ? styles.userMessage : styles.botMessage),
-                                    }}
-                                >
-                                    <Typography variant="body2">{message.text}</Typography>
-                                </Box>
-                            </Box>
-                        ))}
-                    </Box>
-                    <Box sx={styles.inputContainer} component="form" onSubmit={handleSubmit}>
-                        <TextField
-                            size="small"
-                            variant="outlined"
-                            value={stationName}
-                            onChange={(e) => setStationName(e.target.value)}
-                            placeholder="Station name"
-                            sx={styles.input}
-                        />
-                        <TextField
-                            size="small"
-                            fullWidth
-                            variant="outlined"
-                            value={input}
-                            onChange={(e) => setInput(e.target.value)}
-                            placeholder="Type your message..."
-                            sx={styles.input}
-                        />
-                        <Button
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            sx={styles.sendButton}
-                        >
-                            <SendIcon fontSize="small" />
-                        </Button>
-                    </Box>
-                </Paper>
-            )}
-        </Box>
+        </>
     );
 };
 
-export default ChatBot; 
+export default ChatBot;

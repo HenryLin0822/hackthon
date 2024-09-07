@@ -39,7 +39,7 @@ const MRTMapMerge = ({ onStationSelect }) => {
         scrollBehavior: "smooth",
         scrollbarWidth: "none", // Optional: Hide scrollbar for cleaner look
         msOverflowStyle: "none", // Optional: Hide scrollbar for IE/Edge
-        backdropFilter: "blur(3px)", // Apply blur effect to the background
+        // backdropFilter: "blur(3px)", // Apply blur effect to the background
         transition: "background-color 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)",
         // border: "1px solid #ccc",
         borderRadius: "10px",
@@ -48,7 +48,7 @@ const MRTMapMerge = ({ onStationSelect }) => {
       <div id="red" className="scroll-item" style={{ minWidth: "90vw", flexShrink: 0, scrollSnapAlign: "start", transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)" }}>
         <TaipeiMRTMap_red onStationSelect={onStationSelect} />
       </div>
-      <div id="blue" className="scroll-item" style={{ minWidth: "90vw", marginLeft: "5px", flexShrink: 0, scrollSnapAlign: "start", transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)" }}>
+      <div id="blue" className="scroll-item" style={{ minWidth: "90vw", flexShrink: 0, scrollSnapAlign: "start", transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)" }}>
         <TaipeiMRTMap_blue onStationSelect={onStationSelect} />
       </div>
       <div id="brown" className="scroll-item" style={{ minWidth: "90vw", flexShrink: 0, scrollSnapAlign: "start", transition: "transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1.5)" }}>
