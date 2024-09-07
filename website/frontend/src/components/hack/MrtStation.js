@@ -5,6 +5,7 @@ import ShowDataA from "./ShowDataA";
 import ShowDataB from "./ShowDataB";
 import Chatbot from "./ChatBot";
 import TaipeiMRTMap from "./TaipeiMRTMap_red";
+import GoogleMap from "./GoogleMap";
 
 const MRT_STATIONS = [
   "淡水", "紅樹林", "竹圍", "關渡", "忠義", "復興崗", "北投", "新北投", "奇岩", "唭哩岸",
@@ -84,11 +85,11 @@ const MrtStation = () => {
             overflow: "hidden", // Hide overflow during typing effect
             // borderRight: ".05em solid black", // Cursor effect
             width: "fit-content", // Ensure it only takes up the necessary width
-            animation: `typing 5s, blink-caret 0.75s step-end infinite`,
+            animation: `typing ${selectedStation? selectedStation.length * 0.5 : 5}s , blink-caret 0.75s step-end infinite`,
             textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // Add shadow to the text
             '@keyframes typing': {
               from: { width: "0%" },
-              to: { width: "70%" }
+              to: { width: "75%" }
             },
             '@keyframes blink-caret': {
               '50%': { borderColor: "transparent" }
@@ -107,7 +108,7 @@ const MrtStation = () => {
             fontWeight: "bold", // 粗体
             letterSpacing: "0.1rem",
             padding: "5px",
-            animation: `fadeIn 5s ease-in-out`, // 动画名称和持续时间
+            animation: `fadeIn ${selectedStation? selectedStation.length * 0.5 : 5}s ease-in-out`, // 动画名称和持续时间
             textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // 添加文字阴影效果
             backdropFilter: "blur(5px)",
             "@keyframes fadeIn": {
@@ -128,7 +129,7 @@ const MrtStation = () => {
                 // height: "400px",
               }}
             >
-              <TaipeiMRTMap onStationSelect={handleStationSelect} />
+              <GoogleMap searchQuery={selectedStation}/>
             </Box>
           </Grid>
 
