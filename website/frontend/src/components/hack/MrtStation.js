@@ -66,10 +66,7 @@ const MrtStation = () => {
             }
           }}
         >
-          MrtStation
-        </Typography>
-        <Typography variant="h2" gutterBottom sx={{ marginTop: "20px", marginBottom: "20px" }}>
-          {selectedStation ? `${selectedStation} MRT Station` : "MRT Station"}
+          {selectedStation ? `${selectedStation}站` : "MRT Station"}
         </Typography>
 
         <Grid container spacing={2}>
@@ -78,71 +75,38 @@ const MrtStation = () => {
               sx={{
                 marginRight: "10px",
                 marginLeft: "10px",
-                height: "400px",
+                // height: "400px",
               }}
             >
               <TaipeiMRTMap onStationSelect={handleStationSelect} />
             </Box>
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Box
-                  sx={{
-                    height: "200px",
-                    width: "auto",
-                    maxWidth: "100%",
-                    overflowY: "scroll",
-                    scrollbarWidth: "none",
-                    msOverflowStyle: "none",
-                    "&::-webkit-scrollbar": {
-                      display: "none"
-                    },
-                    margin: '20px auto',
-                    padding: '20px',
-                    backgroundColor: 'background.paper', 
-                    borderRadius: '12px', 
-                    boxShadow: 3, 
-                    transition: 'transform 0.3s ease-in-out', 
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      boxShadow: 10, 
-                    },
-                  }}
-                >
-                  <ShowDataA />
-                </Box>
-              </Grid>
-
-              <Grid item xs={12}>
-                <Box
-                  sx={{
-                    height: "200px",
-                    width: "auto",
-                    maxWidth: "100%",
-                    overflowY: "scroll",
-                    scrollbarWidth: "none",
-                    msOverflowStyle: "none",
-                    "&::-webkit-scrollbar": {
-                      display: "none"
-                    },
-                    margin: '20px auto',
-                    padding: '20px',
-                    backgroundColor: 'background.paper',
-                    borderRadius: '12px',
-                    boxShadow: 3,
-                    transition: 'transform 0.3s ease-in-out',
-                    '&:hover': {
-                      transform: 'scale(1.05)',
-                      boxShadow: 10,
-                    },
-                  }}
-                >
-                  <ShowDataB />
-                </Box>
-              </Grid>
-            </Grid>
+          <Grid item xs={12} sx={{display: "flex",justifyContent: "center", alignItems: "center",}}>
+            <Box
+              sx={{
+                height: "200px",
+                width: "auto",
+                maxWidth: "80%",
+                overflowY: "scroll",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+                "&::-webkit-scrollbar": {
+                  display: "none"
+                },
+                padding: '20px',
+                backgroundColor: "rgba(51, 51, 51, 0.5)",
+                borderRadius: '12px', 
+                boxShadow: 3, 
+                transition: 'transform 0.3s ease-in-out', 
+                '&:hover': {
+                  transform: 'scale(1.05)',
+                  boxShadow: 10, 
+                },
+              }}
+            >
+              <ShowDataA />
+            </Box>
           </Grid>
 
           <Grid item xs={12}>

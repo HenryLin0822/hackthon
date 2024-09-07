@@ -18,7 +18,16 @@ const ShowDataA = () => {
 
   return (
     <div>
-      <Typography variant="body1">
+      <Typography
+        variant="body"
+        gutterBottom
+        sx={{
+          marginTop: "20px",
+          marginBottom: "20px",
+          color: "white", // 设置字体颜色为白色
+          fontWeight: "bold", // 设置字体为粗体
+        }}
+      >
         {data}
       </Typography>
     </div>
