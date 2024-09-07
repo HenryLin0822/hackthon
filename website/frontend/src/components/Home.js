@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Container, Box, Typography, Grid, Paper, InputBase, Divider } from "@mui/material";
-import ShowDataA from "./hack/ShowDataA";
+import ShowData from "./hack/ShowData";
 import GoogleMap from "./hack/GoogleMap";
+import ShowDataA from "./hack/ShowDataA";
 import ShowDataB from "./hack/ShowDataB";
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
@@ -10,23 +11,11 @@ import Chatbot from "./hack/ChatBot";
 const Home = () => {
   const [data, setData] = useState("");
 
-  // Handler for input changes
-  const handleInputChange = (event) => {
-    setData(event.target.value);
-  };
-
-  // Handler for form submission
-  const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent page reload
-    console.log("Search value:", data);
-    alert("Search value: " + data);
-    // Perform the search or other actions
-  };
-
   return (
     <Container component="main" disableGutters>
       <Box
         sx={{
+          // height: "100vh", // Full viewport height
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -34,9 +23,8 @@ const Home = () => {
           // background: "linear-gradient(135deg, #7edaf7, #FFFFFF)",
         }}
       >
-        <Typography
-          variant="h2"
-          gutterBottom
+
+        <Typography variant="h2" gutterBottom
           sx={{
             marginTop: "20px",
             marginBottom: "20px",
@@ -45,35 +33,29 @@ const Home = () => {
           EAT SHIT
         </Typography>
 
+
+
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Paper
               component="form"
-              onSubmit={handleSubmit} // Handle form submission
-              sx={{ 
-                p: '2px 4px', 
-                display: 'flex', 
-                alignItems: 'center', 
+              sx={{
+                p: '2px 4px',
+                display: 'flex',
+                alignItems: 'center',
                 marginRight: "40px",
                 marginLeft: "40px",
                 borderRadius: "32px",
                 marginTop: "30px",
-                marginBottom: "50px", 
+                marginBottom: "50px",
               }}
             >
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search Google Maps"
                 inputProps={{ 'aria-label': 'search google maps' }}
-                value={data} // Controlled input value
-                onChange={handleInputChange} // Update state on change
               />
-              <IconButton 
-                type="button" 
-                sx={{ p: '10px' }} 
-                aria-label="search" 
-                onClick={() => handleSubmit({ preventDefault: () => {} })} // Call search function
-              >
+              <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
                 <SearchIcon />
               </IconButton>
               <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
@@ -87,8 +69,9 @@ const Home = () => {
                 marginLeft: "10px",
               }}
             >
-              <GoogleMap/>
+              <GoogleMap />
             </Box>
+
           </Grid>
 
           <Grid item xs={6}>
@@ -111,10 +94,10 @@ const Home = () => {
                 borderRadius: "8px", // Rounded corners
               }}
             >
-              <ShowDataA/>
+              <ShowDataA />
             </Box>
-          </Grid>
 
+          </Grid>
           <Grid item xs={6}>
             <Box
               sx={{
@@ -135,12 +118,12 @@ const Home = () => {
                 borderRadius: "8px", // Rounded corners
               }}
             >
-              <ShowDataB/>
+              <ShowDataB />
             </Box>
           </Grid>
 
           <Grid item xs={12}>
-            <Chatbot/>
+            <Chatbot />
           </Grid>
         </Grid>
 

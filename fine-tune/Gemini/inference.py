@@ -42,6 +42,7 @@ for i in range(sample_num):
     rand = random.randint(1, num - 1)
     examples += "Prompt: " + store[rand][0] + "\nAnswer: " + store[rand][1] + "\n"
 
+
 # Combine the prompt template, examples, and user-provided input
 total_input = prompt_template + examples + input_question
 print("Final Input: ", total_input)
