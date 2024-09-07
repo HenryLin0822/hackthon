@@ -24,4 +24,4 @@ function runPythonScript(question, stationName) {
 }
 
 // Example: Call the function with a question and station name
-runPythonScript('請介紹大安森林公園', '大安森林公園');
+runPythonScript('請介紹國父紀念館', '國父紀念館');
