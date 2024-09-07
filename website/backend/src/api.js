@@ -11,6 +11,10 @@ import Resource from "../models/resource.js";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
+import { spawn } from 'child_process'; // Use ES module import
+                  // Use ES module import for fs
+
+
 
 const router = express.Router();
 // Get the current file's directory
@@ -20,7 +24,7 @@ const __dirname = dirname(__filename);
 // Make the path to 'localfile.txt' relative
 
 router.get('/getData', (req, res) => {
-  const filePath = join(__dirname, 'localfile.txt');
+  const filePath = join(__dirname, 'response.txt');
   fs.readFile(filePath, 'utf-8', (err, data) => {
       if (err) {
           res.status(500).send('Error reading file');
@@ -55,38 +59,58 @@ router.get('/getDataB', (req, res) => {
 });
 
 
+
+
+
+
 router.post('/chatbot', async (req, res) => {
-  console.log("fuckYUUERTERETRTERTYTR");
+  const { stationName, question } = req.body;
 
-  const { question, stationName } = req.body;
+  console.log(stationName);
+  console.log(question);
 
-  // // Escape the input to prevent command injection
-  // const escapedQuestion = question.replace(/["'\\]/g, '');
-  // const escapedStation = stationName.replace(/["'\\]/g, '');
+  // Escape the input to prevent command injection
+  const escapedQuestion = question.replace(/["'\\]/g, '');
+  const escapedStation = stationName.replace(/["'\\]/g, '');
 
-  // Run the Python script with the question and station name as arguments
-  // exec(`python3 inference.py "${question}" "${stationName}"`, (error, stdout, stderr) => {
-  //   if (error) {
-  //     console.error(`Error executing Python script: ${error.message}`);
-  //     return res.status(500).json({ error: "Internal server error" });
-  //   }
+  // Spawn the Python process
+  const pythonProcess = spawn('python3', ['inference.py', escapedQuestion, escapedStation]);
 
-  //   // Ignore stderr warnings unless critical
-  //   if (stderr && !stderr.includes('check_gcp_environment')) {
-  //     console.error(`Error in Python script: ${stderr}`);
-  //     return res.status(500).json({ error: "Internal server error" });
-  //   }
+  // Handle Python script output (stdout)
+  pythonProcess.stdout.on('data', (data) => {
+    console.log(`Python stdout: ${data}`);
+  });
 
-  //   // Read the response from the file
-  //   fs.readFile('response.txt', 'utf8', (err, data) => {
-  //     if (err) {
-  //       console.error(`Error reading response file: ${err}`);
-  //       return res.status(500).json({ error: "Internal server error" });
-  //     }
-  //     res.json({ response: data });
-  //   });
-  // });
+  // Handle any errors in the Python script (stderr)
+  pythonProcess.stderr.on('data', (data) => {
+    console.error(`Python stderr: ${data}`);
+  });
+
+  // Once the Python process finishes
+  pythonProcess.on('close', (code) => {
+    if (code !== 0) {
+      console.error(`Python script exited with code ${code}`);
+      return res.status(500).json({ error: 'Internal server error' }); // Only send response here if there's an error
+    }
+
+    // Read the response from the file after Python script finishes
+    fs.readFile('response.txt', 'utf8', (err, data) => {
+      if (err) {
+        console.error(`Error reading response file: ${err}`);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
+      // Send the response after reading the file successfully
+      console.log("printDATA");
+      console.log(data);
+
+      res.status(200).json({ response: data });
+    });
+  });
 });
+
+
+
+
 
 
 router.get("/", (req, res) => {
@@ -146,11 +170,6 @@ router.get("/teamRich", async (req, res) => {
   const team = teams[0];
   console.log(team);
   res.json(team).status(200);
-});
-
-router.post("/chatCheck", async(req, res) =>{
-  console.log("hellio");
-  res.json("Success").status(200);
 });
 
 router.post("/checkPropertyCost", async (req, res) => {

@@ -59,5 +59,5 @@ response = model.generate_content(
 
 # Print and save the generated response
 print("Generated Response: ", response.text)
-with open("response.txt", "w", encoding="utf-8") as file:
+with open("./src/response.txt", "w", encoding="utf-8") as file:
     file.write(response.text)

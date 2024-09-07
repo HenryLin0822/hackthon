@@ -3,7 +3,7 @@ import { Box, TextField, Button, Typography, Paper, Avatar } from '@mui/material
 import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
-import axios from 'axios';
+import axios from "../axios";
 
 const styles = {
   chatContainer: {
@@ -71,18 +71,39 @@ const ChatBot = () => {
     e.preventDefault();
     if (!input.trim()) return;
 
+    // Add user message to the chat
     setMessages(prev => [...prev, { text: input, isUser: true }]);
 
+    const payload = { stationName, question: input };
+    console.log("Payload:", payload);
+
     try {
-      const response = await axios.post('/chatbot', { question: input, stationName });
-      setMessages(prev => [...prev, { text: response.data.response, isUser: false }]);
+        // Send request to the backend
+        const response = await axios.post('/chatbot', payload);
+        
+        // Log and check the response from the backend
+        alert("Response:", response.data);
+
+        // Set the response message from the bot
+        // setMessages(prev => [...prev, { text: response.data.response, isUser: false }]);
     } catch (error) {
-      console.error('Error sending message:', error);
-      setMessages(prev => [...prev, { text: 'Sorry, there was an error processing your request.', isUser: false }]);
+        // console.error('Error sending message:', error);
+        // setMessages(prev => [...prev, { text: 'Sorry, there was an error processing your request.', isUser: false }]);
     }
 
+    axios
+      .get("/getData")
+      .then((res) => {
+        setMessages(prev => [...prev, { text: res.data.number, isUser: false }]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // Clear input field
     setInput('');
-  };
+};
+
 
   return (
     <Paper sx={styles.chatContainer} elevation={0}>
