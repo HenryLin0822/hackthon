@@ -2,8 +2,8 @@ import _axios from "axios";
 
 const instance = _axios.create({
   baseURL:
-    "http://10.0.2.2:4000/api",
-  timeout: 2000,
+    process.env.REACT_APP_API_URL || "https://cktfgsc-bank-z3zpvj7vba-de.a.run.app/api",
+  timeout: 10000,
 });
 
 export default instance;

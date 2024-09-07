@@ -12,8 +12,6 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { spawn } from 'child_process'; // Use ES module import
-                  // Use ES module import for fs
-
 
 
 const router = express.Router();
@@ -86,6 +84,7 @@ router.post('/chatbot', async (req, res) => {
     console.error(`Python stderr: ${data}`);
   });
 
+  const responseFilePath = join(__dirname, 'response.txt');
   // Once the Python process finishes
   pythonProcess.on('close', (code) => {
     if (code !== 0) {
@@ -94,13 +93,15 @@ router.post('/chatbot', async (req, res) => {
     }
 
     // Read the response from the file after Python script finishes
-    fs.readFile('response.txt', 'utf8', (err, data) => {
+    fs.readFile(responseFilePath, 'utf8', (err, data) => {
+      console.log(data);
+
       if (err) {
         console.error(`Error reading response file: ${err}`);
         return res.status(500).json({ error: 'Internal server error' });
       }
       // Send the response after reading the file successfully
-      console.log("printDATA");
+      console.log("printDATAAAAAAAAAAAAAAA");
       console.log(data);
 
       res.status(200).json({ response: data });

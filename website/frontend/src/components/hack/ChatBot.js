@@ -87,7 +87,8 @@ const ChatBot = () => {
 
         try {
             const response = await axios.post('/chatbot', payload);
-            alert("Response:", response.data);
+            // console.log(response.data);
+            // setMessages(prev => [{ text: response.data, isUser: false }, ...prev]);
         } catch (error) {
             console.error('Error sending message:', error);
         }

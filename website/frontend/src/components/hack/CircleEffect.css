@@ -1,0 +1,21 @@
+@keyframes pulse {
+    0% {
+        r: 18;
+    }
+    50% {
+        r: 36;
+    }
+    100% {
+        r: 18;
+    }
+}
+
+.animated-circle circle {
+    fill: blue;
+    stroke: white;
+    stroke-width: 2;
+}
+
+.selected circle {
+    fill: red; /* Example color for selected station */
+}
