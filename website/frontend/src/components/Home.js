@@ -5,6 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import TaipeiMRTMap from "./hack/TaipeiMRTMap_red";
 import MRTMapMerge from "./hack/MRTMapMerge";
 import "./Home.css";
+import ChartA from "./hack/ChartA";
 
 // Define your MRT stations list
 const MRT_STATIONS = [
@@ -95,6 +96,9 @@ const Home = () => {
         </Typography>
 
         <Grid container spacing={2}>
+          {/* <Grid item xs={12} md={6}>
+            <ChartA />
+          </Grid> */}
           <Grid item xs={12}>
             <Paper
               component="form"
