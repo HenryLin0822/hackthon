@@ -41,9 +41,32 @@ const MrtStation = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
+          minHeight: "30vh",
         }}
       >
+        <Typography variant="h1" gutterBottom
+          sx={{
+            color : "#FFFFFF",
+            marginTop: "40px",
+            marginBottom: "1px",
+            fontSize: "4rem", // Adjust the font size as needed
+            fontWeight: "bold", // Bold text
+            whiteSpace: "nowrap", // Prevent text from wrapping
+            overflow: "hidden", // Hide overflow during typing effect
+            // borderRight: ".05em solid black", // Cursor effect
+            width: "fit-content", // Ensure it only takes up the necessary width
+            animation: `typing 5s , blink-caret 0.75s step-end infinite`,
+            textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // Add shadow to the text
+            '@keyframes typing': {
+              from: { width: "1%" },
+              to: { width: "70%" }
+            },
+            '@keyframes blink-caret': {
+              '50%': { borderColor: "transparent" }
+            }
+          }}
+        >
+          MrtStation
         <Typography variant="h2" gutterBottom sx={{ marginTop: "20px", marginBottom: "20px" }}>
           {selectedStation ? `${selectedStation} MRT Station` : "MRT Station"}
         </Typography>
@@ -77,13 +100,13 @@ const MrtStation = () => {
                     },
                     margin: '20px auto',
                     padding: '20px',
-                    backgroundColor: 'background.paper',
-                    borderRadius: '12px',
-                    boxShadow: 3,
-                    transition: 'transform 0.3s ease-in-out',
+                    backgroundColor: 'background.paper', 
+                    borderRadius: '12px', 
+                    boxShadow: 3, 
+                    transition: 'transform 0.3s ease-in-out', 
                     '&:hover': {
                       transform: 'scale(1.05)',
-                      boxShadow: 10,
+                      boxShadow: 10, 
                     },
                   }}
                 >
@@ -128,16 +151,6 @@ const MrtStation = () => {
           </Grid>
         </Grid>
 
-        <img
-          src="/banner.jpg"
-          alt="Avengers"
-          style={{
-            maxWidth: "100%",
-            userSelect: "none",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        />
       </Box>
     </Container>
   );
