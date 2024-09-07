@@ -133,7 +133,7 @@ const ChatBot = (stationName) => {
     };
 
     return (
-        <>
+        <Box>
             <Paper sx={chatStyle()} elevation={chatState !== 'minimized' ? 3 : 0}>
                 {chatState !== 'minimized' && (
                     <>
