@@ -24,7 +24,7 @@ else:
     sys.exit(1)
 
 # Load the Excel file based on the station name
-file_path = f"{station_name}.xlsx"
+file_path = f"./sample_data/{station_name}.xlsx"
 
 # Check if the file exists
 if not os.path.exists(file_path):
@@ -42,9 +42,10 @@ for i in range(sample_num):
     rand = random.randint(1, num - 1)
     examples += "問題: " + store[rand][0] + "\n答案: " + store[rand][1] + "\n"
 
-instructions = "回答以下問題，注意:請根據事實回答!你不能自行想像!你可以參考範例的資訊\n"
+instructions = "回答以下問題，注意:請根據事實回答!你不能自行想像!你可以參考範例的資訊，回答中禁止含有*\n"
 # Combine the prompt template, examples, and user-provided input
 total_input = prompt_template + examples + instructions +"問題:"+ input_question
+#total_input = input_question
 print("Final Input: ", total_input)
 
 # Generate response using Google Generative AI
@@ -58,7 +59,8 @@ response = model.generate_content(
     )
 )
 
+answer = response.text.replace("*","")
 # Print and save the generated response
-print("Generated Response: ", response.text)
+print("Generated Response: ", answer)
 with open("./src/response.txt", "w", encoding="utf-8") as file:
-    file.write(response.text)
+    file.write(answer)
