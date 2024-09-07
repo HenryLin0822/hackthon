@@ -1,8 +1,8 @@
 import sys
 import google.generativeai as genai
 import random
-
 from load import load
+import os
 
 # Your API key - ensure this is securely handled in production
 api_key = "AIzaSyBzF_URXtucdccCmKbBDR1V6qNdyoCYHzM"
@@ -15,8 +15,24 @@ max_tokens = 500
 # Default prompt template
 prompt_template = """Please answer the following questions based on FACTS (you can't answer something you're not sure about), below are some examples (you can generate an answer based on these examples):\n"""
 
-# Load example data from your Excel file
-store = load("../大安森林公園.xlsx")
+# Check if both input (question) and station name are provided via command-line arguments
+if len(sys.argv) > 2:
+    input_question = sys.argv[1]
+    station_name = sys.argv[2]
+else:
+    print("Input question or station name not provided. Exiting.")
+    sys.exit(1)
+
+# Load the Excel file based on the station name
+file_path = f"../{station_name}.xlsx"
+
+# Check if the file exists
+if not os.path.exists(file_path):
+    print(f"Excel file for station '{station_name}' not found. Exiting.")
+    sys.exit(1)
+
+# Load example data from the Excel file
+store = load(file_path)
 sample_num = 5
 num = len(store)
 examples = ""
@@ -26,14 +42,7 @@ for i in range(sample_num):
     rand = random.randint(1, num - 1)
     examples += "Prompt: " + store[rand][0] + "\nAnswer: " + store[rand][1] + "\n"
 
-# Check if an input (question) is provided via command-line arguments
-if len(sys.argv) > 1:
-    input_question = sys.argv[1]
-else:
-    print("No input provided. Exiting.")
-    sys.exit(1)
-
-# Combine the prompt template, examples, and the user-provided input
+# Combine the prompt template, examples, and user-provided input
 total_input = prompt_template + examples + input_question
 print("Final Input: ", total_input)
 
@@ -52,4 +61,3 @@ response = model.generate_content(
 print("Generated Response: ", response.text)
 with open("response.txt", "w", encoding="utf-8") as file:
     file.write(response.text)
-
