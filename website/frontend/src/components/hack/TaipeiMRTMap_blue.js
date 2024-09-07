@@ -31,8 +31,8 @@ const TaipeiMRTBlueLineMap = ({ onStationSelect }) => {
     const [selectedStation, setSelectedStation] = useState(null);
 
     const handleStationClick = (station) => {
-        setSelectedStation(station);
-        onStationSelect(station);
+        setSelectedStation(station.name);
+        onStationSelect(station.name);
     };
 
     return (

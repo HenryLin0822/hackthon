@@ -36,8 +36,17 @@ const TaipeiMRTYellowLineMap = ({ onStationSelect }) => {
     const [selectedStation, setSelectedStation] = useState(null);
 
     const handleStationClick = (station) => {
-        setSelectedStation(station);
+        setSelectedStation(station.name);
         onStationSelect(station.name);
+    };
+
+    // Generate path data based on stations
+    const generatePathData = () => {
+        let pathData = `M${stations[0].x} ${stations[0].y}`;
+        for (let i = 1; i < stations.length; i++) {
+            pathData += ` L${stations[i].x} ${stations[i].y}`;
+        }
+        return pathData;
     };
 
     return (
@@ -45,23 +54,14 @@ const TaipeiMRTYellowLineMap = ({ onStationSelect }) => {
             <svg width="100%" height="100%" viewBox="0 0 400 450">
                 {/* Main line */}
                 <path
-                    d="M50 50 V300 H300 V50 H200"
+                    d={generatePathData()}
                     fill="none"
                     stroke="#ffd800"
                     strokeWidth="10"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                 />
-                {/* Branch to 迴龍 */}
-                <path
-                    d="M250 400 H350"
-                    fill="none"
-                    stroke="#ffd800"
-                    strokeWidth="10"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                />
-
+                
                 {stations.map((station, index) => (
                     <g key={index} onClick={() => handleStationClick(station)}>
                         <circle

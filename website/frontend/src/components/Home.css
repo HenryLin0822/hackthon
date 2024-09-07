@@ -1,0 +1,22 @@
+/* Home.css */
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* Apply animation to the search bar */
+  .search-bar {
+    animation: fadeIn 3s ease-in-out;
+  }
+  
+  /* Apply animation to the MRTMap component */
+  .mrt-map {
+    animation: fadeIn 3s ease-in-out;
+  }
+  
