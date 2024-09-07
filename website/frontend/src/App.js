@@ -20,6 +20,7 @@ import BroadcastAlert from "./components/BroadcastAlert";
 import Broadcast from "./components/admin/Broadcast";
 import { roleIdMap } from "./components/Login";
 import theme from "./theme";
+import MRTStation from "./components/hack/MrtStation";
 
 const App = () => {
   const localRole = localStorage.getItem("role");
@@ -71,7 +72,8 @@ const App = () => {
               <Route path="addmoney" element={<AddMoney />} />
               <Route path="event" element={<Event />} />
               <Route path="loading" element={<Loading />} />
-              <Route path="mrtstation" element={<MrtStation />} />
+              {/* <Route path="mrtstation" element={<MrtStation />} /> */}
+              <Route path="/mrtstation/:stationName" element={<MRTStation />} />
               {/* <Route path="bank" element={<Bank />} /> */}
               <Route path="broadcast" element={<Broadcast />} />
             </Routes>

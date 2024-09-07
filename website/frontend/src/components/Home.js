@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Container, Box, Typography, Grid, Paper, TextField, IconButton, MenuItem, List, ListItem } from "@mui/material";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { Container, Box, Typography, Grid, Paper, TextField, IconButton, List, ListItem } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import TaipeiMRTMap from "./hack/TaipeiMRTMap";
-import Chatbot from "./hack/ChatBot";
 import "./Home.css";
 
 // Define your MRT stations list
@@ -18,23 +18,22 @@ const MRT_STATIONS = [
   "三重國小", "新店區公所", "萬隆"
 ];
 
-
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredStations, setFilteredStations] = useState([]);
-  const [borderColor, setBorderColor] = useState("#ccc"); // Default border color
+  const [borderColor, setBorderColor] = useState("#ccc");
   const [selectedStation, setSelectedStation] = useState(null);
+
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     if (searchQuery) {
-      const matches = MRT_STATIONS.filter(station => 
-        station.includes(searchQuery)
-      );
+      const matches = MRT_STATIONS.filter(station => station.includes(searchQuery));
       setFilteredStations(matches);
-      setBorderColor(matches.includes(searchQuery) ? "#ccc" : "red");
+      // setBorderColor(matches.includes(searchQuery) ? "#ccc" : "red");
     } else {
       setFilteredStations([]);
-      setBorderColor("#ccc");
+      // setBorderColor("#ccc");
     }
   }, [searchQuery]);
 
@@ -44,9 +43,10 @@ const Home = () => {
 
   const handleStationSelect = (station) => {
     setSearchQuery(station);
-    setSelectedStation(station.name);
+    setSelectedStation(station);
     setFilteredStations([]);
-    setBorderColor("#ccc");
+    // setBorderColor("#ccc");
+    navigate(`/mrtstation/${station}`); // Navigate to /mrtstation with the station name
   };
 
   return (
@@ -96,7 +96,6 @@ const Home = () => {
                 margin: "30px 30px",
                 boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
                 zIndex: 2,
-                // border: `3px solid ${borderColor}`, // Apply dynamic border color
               }}
             >
               <TextField
@@ -118,7 +117,6 @@ const Home = () => {
                 <SearchIcon />
               </IconButton>
             </Paper>
-            {/* hi */}
 
             {filteredStations.length > 0 && (
               <Box
@@ -130,15 +128,13 @@ const Home = () => {
                   marginLeft: "30px",
                   marginTop: "-20px",
                   backgroundColor: 'white',
-                  // position: "absolute",
-                  zIndex: -1,
                 }}
               >
                 <List>
                   {filteredStations.map((station, index) => (
-                    <ListItem 
-                      button 
-                      key={index} 
+                    <ListItem
+                      button
+                      key={index}
                       onClick={() => handleStationSelect(station)}
                     >
                       {station}
