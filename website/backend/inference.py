@@ -37,7 +37,7 @@ if not os.path.exists(file_path):
 # Load example data from the Excel file
 if found == True:
     store = load(file_path)
-    sample_num = 20
+    sample_num = 5
     num = len(store)
     examples = ""
     #print("input_question: ", input_question)
@@ -47,7 +47,7 @@ if found == True:
         examples += "問題: " + store[rand][0] + "\n答案: " + store[rand][1] + "\n"
 
     #instructions = "回答以下問題，注意:請根據事實回答!你不能自行想像!你可以參考範例的資訊，回答中禁止含有*\n"
-    instructions = "回答以下問題，你可以參考範例或自行延伸，回答不能超過兩句\n"
+    instructions = "回答以下問題，你可以參考範例或自行延伸，回答不能超過兩句!\n"
     # Combine the prompt template, examples, and user-provided input
     total_input = prompt_template + examples + instructions +"問題:"+ input_question
     #total_input = input_question

@@ -207,7 +207,12 @@ const ChatBot = (stationName) => {
                                 ...(isContentVisible ? styles.visibleMinimize : {})
                             }}
                         >
-                            <MinimizeIcon fontSize="small" />
+                            <MinimizeIcon 
+                                fontSize="small" 
+                                sx={{
+                                    zIndex:1000,
+                                }}    
+                            />
                         </Button>
                         <Box 
                             sx={{
