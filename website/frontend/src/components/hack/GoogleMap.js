@@ -4,7 +4,8 @@ const GoogleMap = ({ searchQuery }) => {
   const googleMapRef = useRef(null);
   const mapInstance = useRef(null);
   const [autocomplete, setAutocomplete] = useState(null);
-  
+  const markerRef = useRef(null); // Ref to keep track of the current marker
+
   // Your Google Maps API key
   const apiKey = 'AIzaSyAG76siZPiYe27wx--Ao5zidU7GkKk5OBg';
 
@@ -51,10 +52,10 @@ const GoogleMap = ({ searchQuery }) => {
         delete window.google;
       }
     };
-  }, []);
+  }, [apiKey]);
 
   useEffect(() => {
-    if (autocomplete && searchQuery) {
+    if (mapInstance.current && searchQuery) {
       const service = new window.google.maps.places.PlacesService(mapInstance.current);
       const request = {
         query: searchQuery,
@@ -62,38 +63,37 @@ const GoogleMap = ({ searchQuery }) => {
       };
       service.findPlaceFromQuery(request, (results, status) => {
         if (status === window.google.maps.places.PlacesServiceStatus.OK && results[0]) {
-          mapInstance.current.setCenter(results[0].geometry.location);
-          new window.google.maps.Marker({
+          // Remove the previous marker if it exists
+          if (markerRef.current) {
+            markerRef.current.setMap(null);
+          }
+
+          // Add a new marker
+          const newMarker = new window.google.maps.Marker({
             position: results[0].geometry.location,
             map: mapInstance.current,
+            title: results[0].name, // Optional: Add a title to the marker
           });
+          markerRef.current = newMarker; // Update the marker reference
+
+          // Zoom in on the new pin
+          mapInstance.current.setZoom(15); // Adjust the zoom level as needed
+          mapInstance.current.setCenter(results[0].geometry.location);
         }
       });
     }
-  }, [autocomplete, searchQuery]);
+  }, [searchQuery]);
 
   return (
     <div>
-      {/* <input
-        id="search-input"
-        type="text"
-        placeholder="Search for a place"
-        style={{
-          width: '98%',
-          padding: '10px',
-          borderRadius: '4px',
-          marginBottom: '10px',
-          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
-        }}
-      /> */}
       <div
         ref={googleMapRef}
         style={{
           width: '100%',
           height: '300px',
-          borderRadius: '8px', // Rounded corners
-          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Soft shadow
-          overflow: 'hidden', // Ensures content fits within rounded corners
+          borderRadius: '8px',
+          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
+          overflow: 'hidden',
         }}
       />
     </div>
