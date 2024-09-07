@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { Container, Box, Typography, Grid, Paper, TextField, IconButton, List, ListItem } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import TaipeiMRTMap from "./hack/TaipeiMRTMap";
+import TaipeiMRTMap from "./hack/TaipeiMRTMap_red";
+import MRTMapMerge from "./hack/MRTMapMerge";
 import "./Home.css";
 
 // Define your MRT stations list
@@ -160,12 +161,12 @@ const Home = () => {
           <Grid item xs={12} md={6}>
             <Box
               sx={{
-                marginRight: "10px",
-                marginLeft: "10px",
+                marginRight: "20px",
+                marginLeft: "20px",
                 height: "400px",
               }}
             >
-              <TaipeiMRTMap onStationSelect={handleStationSelect} />
+              <MRTMapMerge onStationSelect={handleStationSelect} />
             </Box>
           </Grid>
         </Grid>

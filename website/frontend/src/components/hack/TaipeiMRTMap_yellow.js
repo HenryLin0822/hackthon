@@ -35,8 +35,8 @@ const TaipeiMRTYellowLineMap = ({ onStationSelect }) => {
     const [selectedStation, setSelectedStation] = useState(null);
 
     const handleStationClick = (station) => {
-        setSelectedStation(station);
-        onStationSelect(station);
+        setSelectedStation(station.name);
+        onStationSelect(station.name);
     };
 
     return (
@@ -74,7 +74,7 @@ const TaipeiMRTYellowLineMap = ({ onStationSelect }) => {
                         <circle
                             cx={station.x}
                             cy={station.y}
-                            r="8"
+                            r="18"
                             fill={selectedStation?.name === station.name ? '#cca000' : '#ffd800'}
                             stroke="white"
                             strokeWidth="2"
