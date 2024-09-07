@@ -46,8 +46,18 @@ const Home = () => {
     setSelectedStation(station);
     setFilteredStations([]);
     // setBorderColor("#ccc");
-    navigate(`/mrtstation/${station}`); // Navigate to /mrtstation with the station name
+    // navigate(`/mrtstation/${station}`); // Navigate to /mrtstation with the station name
   };
+
+  const naviToPage = (station) => {
+    //if the mrt station is in the list, navigate to the page
+    if (MRT_STATIONS.includes(station)) {
+      navigate(`/mrtstation/${station}`);
+    }
+    else{
+      alert("Invalid MRT Station");
+    }
+  }
 
   return (
     <Container component="main" disableGutters>
@@ -114,7 +124,9 @@ const Home = () => {
                 }}
               />
               <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-                <SearchIcon />
+                <SearchIcon
+                  onClick={() => naviToPage(searchQuery)} 
+                />
               </IconButton>
             </Paper>
 
