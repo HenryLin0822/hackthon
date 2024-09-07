@@ -51,7 +51,7 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <RoleContext.Provider value={value}>
-        <Header />
+        {/* <Header /> */}
         <BroadcastAlert />
         <TransitionGroup>
           <CSSTransition
@@ -75,7 +75,7 @@ const App = () => {
             </Routes>
           </CSSTransition>
         </TransitionGroup>
-        <Footer />
+        {/* <Footer /> */}
       </RoleContext.Provider>
     </ThemeProvider>
   );

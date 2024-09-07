@@ -1,5 +1,5 @@
 import React, { useState, useContext , useEffect} from "react";
-import axios from "./axios";
+import axios from "../axios";
 
 const ShowData = () => {
     const [data, setData] = useState(-1);
