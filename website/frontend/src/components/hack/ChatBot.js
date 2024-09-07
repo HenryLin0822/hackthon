@@ -13,12 +13,19 @@ const Chatbot = () => {
         // Add user message to chat
         setMessages(prev => [...prev, { text: input, isUser: true }]);
 
+        console.log("stationName: ", stationName);
+        console.log("input: ", input);
+
         try {
-            const response = await axios.post('/api/chatbot', { question: input, stationName });
+            alert("firsy");
+            const response = await 
+                axios
+                    .post('/chatbot', { question: input, stationName });
 
             // Add bot response to chat
             setMessages(prev => [...prev, { text: response.data.response, isUser: false }]);
         } catch (error) {
+            alert("error");
             console.error('Error sending message:', error);
             setMessages(prev => [...prev, { text: 'Sorry, there was an error processing your request.', isUser: false }]);
         }

@@ -32,6 +32,7 @@ router.get('/getData', (req, res) => {
 
 router.get('/getDataA', (req, res) => {
   const filePath = join(__dirname, '/data/a.txt');
+  console.log("A");
   fs.readFile(filePath, 'utf-8', (err, data) => {
       if (err) {
           res.status(500).send('Error reading file');
@@ -43,6 +44,7 @@ router.get('/getDataA', (req, res) => {
 
 router.get('/getDataB', (req, res) => {
   const filePath = join(__dirname, '/data/b.txt');
+  console.log("b");
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
       res.status(500).send('Error reading file');
@@ -54,6 +56,8 @@ router.get('/getDataB', (req, res) => {
 
 
 router.post("/chatbot", async (req, res) => {
+  console.log("fuckYUUERTERETRTERTYTR");
+
   const { question, stationName } = req.body;
 
   // Escape the input to prevent command injection
