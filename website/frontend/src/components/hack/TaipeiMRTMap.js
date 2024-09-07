@@ -36,8 +36,8 @@ const TaipeiMRTMap = ({ onStationSelect }) => {
     const [selectedStation, setSelectedStation] = useState(null);
 
     const handleStationClick = (station) => {
-        setSelectedStation(station);
-        onStationSelect(station); // Call the callback function with the selected station
+        setSelectedStation(station.name);
+        onStationSelect(station.name); // Call the callback function with the selected station
     };
 
     return (
