@@ -74,7 +74,7 @@ const GoogleMap = ({ searchQuery }) => {
 
   return (
     <div>
-      <input
+      {/* <input
         id="search-input"
         type="text"
         placeholder="Search for a place"
@@ -85,14 +85,14 @@ const GoogleMap = ({ searchQuery }) => {
           marginBottom: '10px',
           boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
         }}
-      />
+      /> */}
       <div
         ref={googleMapRef}
         style={{
           width: '100%',
           height: '300px',
-          borderRadius: '16px', // Rounded corners
-          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)', // Soft shadow
+          borderRadius: '8px', // Rounded corners
+          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)', // Soft shadow
           overflow: 'hidden', // Ensures content fits within rounded corners
         }}
       />
