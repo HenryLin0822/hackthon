@@ -13,7 +13,7 @@ model = genai.GenerativeModel('gemini-1.0-pro')
 max_tokens = 500
 
 # Default prompt template
-prompt_template = """Please answer the following questions based on FACTS (you can't answer something you're not sure about), below are some examples (you can generate an answer based on these examples):\n"""
+prompt_template = "以下為一些問答範例\n"
 
 # Check if both input (question) and station name are provided via command-line arguments
 if len(sys.argv) > 2:
@@ -33,17 +33,18 @@ if not os.path.exists(file_path):
 
 # Load example data from the Excel file
 store = load(file_path)
-sample_num = 5
+sample_num = 20
 num = len(store)
 examples = ""
-
+#print("input_question: ", input_question)
 # Randomly select examples from the loaded data
 for i in range(sample_num):
     rand = random.randint(1, num - 1)
-    examples += "Prompt: " + store[rand][0] + "\nAnswer: " + store[rand][1] + "\n"
+    examples += "問題: " + store[rand][0] + "\n答案: " + store[rand][1] + "\n"
 
+instructions = "回答以下問題，注意:請根據事實回答!你不能自行想像!你可以參考範例的資訊\n"
 # Combine the prompt template, examples, and user-provided input
-total_input = prompt_template + examples + input_question
+total_input = prompt_template + examples + instructions +"問題:"+ input_question
 print("Final Input: ", total_input)
 
 # Generate response using Google Generative AI
