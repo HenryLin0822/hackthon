@@ -55,7 +55,7 @@ db.once("open", () => {
 
   const io = new Server(server, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "*",
       methods: ["GET", "POST"],
     },
   });
@@ -121,7 +121,9 @@ db.once("open", () => {
   //   app.use(express.static(path.join(__dirname, "../frontend", "build")));
   // }
   app.use(express.json());
-  app.use(cors());
+  app.use(cors({
+    origin:'*'
+  }));
   // app.use(sessionMiddleware);
   app.use(morgan("dev"));
   // app.use(express.static(path.join(process.cwd(), "build")));
