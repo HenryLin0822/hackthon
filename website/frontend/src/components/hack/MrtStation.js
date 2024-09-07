@@ -4,7 +4,7 @@ import { Container, Box, Typography, Grid } from "@mui/material";
 import ShowDataA from "./ShowDataA";
 import ShowDataB from "./ShowDataB";
 import Chatbot from "./ChatBot";
-import TaipeiMRTMap from "./TaipeiMRTMap";
+import TaipeiMRTMap from "./TaipeiMRTMap_red";
 
 const MRT_STATIONS = [
   "淡水", "紅樹林", "竹圍", "關渡", "忠義", "復興崗", "北投", "新北投", "奇岩", "唭哩岸",
