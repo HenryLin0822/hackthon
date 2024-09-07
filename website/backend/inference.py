@@ -60,7 +60,35 @@ response = model.generate_content(
 )
 
 answer = response.text.replace("*","")
+##########   Function to catch up the main object of the article   ##########
+
+prompt_template_2 = """This question at least contain an attractions (If not, please return -1 to tell me) below are some examples (you can generate an answer based on these examples):\n"""
+file_path = f"./sample_data_obj/主體擷取.xlsx"
+store = load(file_path)
+sample_num = 5
+num = len(store)
+examples_2 = ""
+for i in range(sample_num):
+    rand = random.randint(1, num - 1)
+    examples_2 += "Prompt: " + store[rand][0] + "\nAnswer: " + store[rand][1] + "\n"
+total_input_2 = prompt_template_2 + examples_2 + response.text
+print("Final Input: ", total_input)
+response_obj = model.generate_content(
+    total_input_2,
+    generation_config=genai.types.GenerationConfig(
+        candidate_count=1,
+        stop_sequences=["x"],
+        max_output_tokens=max_tokens,
+        temperature=1.0,
+    )
+)
+
+
+
+##################################################################################
 # Print and save the generated response
 print("Generated Response: ", answer)
 with open("./src/response.txt", "w", encoding="utf-8") as file:
     file.write(answer)
+with open("./src/response_obj.txt", "w", encoding="utf-8") as file:
+    file.write(response_obj.text)
