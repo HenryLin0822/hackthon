@@ -117,10 +117,10 @@ const styles = {
     },
 };
 
-const ChatBot = () => {
+const ChatBot = (stationName) => {
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState([]);
-    const [stationName, setStationName] = useState('');
+    // const [stationName, setStationName] = useState('');
     const [chatState, setChatState] = useState('minimized'); // 'minimized', 'expanding', 'expanded', 'shrinking'
     const [isContentVisible, setIsContentVisible] = useState(false);
     const messagesEndRef = useRef(null);
@@ -137,15 +137,22 @@ const ChatBot = () => {
 
         setMessages(prev => [{ text: input, isUser: true }, ...prev]);
 
-        const payload = { stationName, question: input };
+        // alert("Station Name: " + stationName.stationName);
+        const Realname = stationName.stationName;
+        const payload = { stationName: Realname , question: input };
         console.log("Payload:", payload);
 
         try {
             const response = await axios.post('/chatbot', payload);
-            alert("Response: " + JSON.stringify(response.data));
+            setInput('');
+            // alert("Response: " + JSON.stringify(response.data));
         } catch (error) {
             console.error('Error sending message:', error);
+            setInput('');
         }
+
+        //sleep 2 second
+        await new Promise(r => setTimeout(r, 5000));
 
         axios
             .get("/getData")
@@ -237,14 +244,14 @@ const ChatBot = () => {
                             component="form" 
                             onSubmit={handleSubmit}
                         >
-                            <TextField
+                            {/* <TextField
                                 size="small"
                                 variant="outlined"
                                 value={stationName}
                                 onChange={(e) => setStationName(e.target.value)}
                                 placeholder="Station name"
                                 sx={styles.input}
-                            />
+                            /> */}
                             <TextField
                                 size="small"
                                 fullWidth

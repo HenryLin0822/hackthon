@@ -13,42 +13,49 @@ model = genai.GenerativeModel('gemini-1.0-pro')
 max_tokens = 500
 
 # Default prompt template
-prompt_template = "以下為一些問答範例\n"
+
 
 # Check if both input (question) and station name are provided via command-line arguments
 if len(sys.argv) > 2:
     input_question = sys.argv[1]
     station_name = sys.argv[2]
+    print(f"Input question: {input_question}")
+    print(f"Station name: {station_name}")
 else:
     print("Input question or station name not provided. Exiting.")
     sys.exit(1)
-
+prompt_template = f"以下為一些問答範例，你現在在介紹捷運{station_name}站\n"
 # Load the Excel file based on the station name
 file_path = f"./sample_data/{station_name}.xlsx"
-
+found = True
 # Check if the file exists
 if not os.path.exists(file_path):
     print(f"Excel file for station '{station_name}' not found. Exiting.")
-    sys.exit(1)
+    found = False
+
 
 # Load example data from the Excel file
-store = load(file_path)
-sample_num = 20
-num = len(store)
-examples = ""
-#print("input_question: ", input_question)
-# Randomly select examples from the loaded data
-for i in range(sample_num):
-    rand = random.randint(1, num - 1)
-    examples += "問題: " + store[rand][0] + "\n答案: " + store[rand][1] + "\n"
+if found == True:
+    store = load(file_path)
+    sample_num = 20
+    num = len(store)
+    examples = ""
+    #print("input_question: ", input_question)
+    # Randomly select examples from the loaded data
+    for i in range(sample_num):
+        rand = random.randint(1, num - 1)
+        examples += "問題: " + store[rand][0] + "\n答案: " + store[rand][1] + "\n"
 
-instructions = "回答以下問題，注意:請根據事實回答!你不能自行想像!你可以參考範例的資訊，回答中禁止含有*\n"
-# Combine the prompt template, examples, and user-provided input
-total_input = prompt_template + examples + instructions +"問題:"+ input_question
-#total_input = input_question
-print("Final Input: ", total_input)
-
+    #instructions = "回答以下問題，注意:請根據事實回答!你不能自行想像!你可以參考範例的資訊，回答中禁止含有*\n"
+    instructions = "回答以下問題，你可以參考範例或自行延伸，回答不能超過兩句\n"
+    # Combine the prompt template, examples, and user-provided input
+    total_input = prompt_template + examples + instructions +"問題:"+ input_question
+    #total_input = input_question
+    
+else:
+    total_input = f"你現在在介紹捷運{station_name}站，回答以下問題，回答不能超過兩句:" + input_question
 # Generate response using Google Generative AI
+print("Final Input: ", total_input)
 response = model.generate_content(
     total_input,
     generation_config=genai.types.GenerationConfig(

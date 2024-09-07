@@ -57,10 +57,6 @@ router.get('/getDataB', (req, res) => {
 });
 
 
-
-
-
-
 router.post('/chatbot', async (req, res) => {
   const { stationName, question } = req.body;
 
