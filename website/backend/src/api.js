@@ -22,14 +22,45 @@ const filePath = join(__dirname, 'localfile.txt');
 
 router.get('/getData', (req, res) => {
   fs.readFile(filePath, 'utf-8', (err, data) => {
-      if (err) {
-          res.status(500).send('Error reading file');
-          return;
-      }
-      res.status(200).json({ number: data.trim() });
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    res.status(200).json({ number: data.trim() });
   });
 });
 
+
+router.post("/chatbot", async (req, res) => {
+  const { question, stationName } = req.body;
+
+  // Escape the input to prevent command injection
+  const escapedQuestion = question.replace(/["'\\]/g, '');
+  const escapedStation = stationName.replace(/["'\\]/g, '');
+
+  // Run the Python script with the question and station name as arguments
+  exec(`python3 inference.py "${escapedQuestion}" "${escapedStation}"`, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Error executing Python script: ${error.message}`);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    // Ignore stderr warnings unless critical
+    if (stderr && !stderr.includes('check_gcp_environment')) {
+      console.error(`Error in Python script: ${stderr}`);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    // Read the response from the file
+    fs.readFile('response.txt', 'utf8', (err, data) => {
+      if (err) {
+        console.error(`Error reading response file: ${err}`);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      res.json({ response: data });
+    });
+  });
+});
 
 const buffBuildings2 = async (building_1, building_2) => {
   for (let i = 0; i < 3; i++) {
@@ -364,7 +395,7 @@ router.post("/interest", async (req, res) => {
       teams[i].money = Math.round(teams[i].money * 1.05);
       await teams[i].save();
     }
-    
+
     res.status(200).json("Success");
   } catch (error) {
     console.error("Error updating interest:", error);
@@ -420,7 +451,7 @@ router
             res.json("Success").status(200);
           }
           break;
-          case 4://工被入侵，所有人存款-2000
+        case 4://工被入侵，所有人存款-2000
           {
             const teams = await Team.find();
             for (let i = 0; i < teams.length; i++) {
@@ -430,7 +461,7 @@ router
             res.json("Success").status(200);
           }
           break;
-        }
+      }
       pair.value = id;
       await pair.save();
 
@@ -648,9 +679,8 @@ router.post("/equility", async (req, res) => {
     await teams[order + 1].save();
     req.io.emit("broadcast", {
       title: "實質平等發動",
-      description: `${team[0].teamname}使用了實質平等, 與${
-        teams[order + 1].teamname
-      }平分金錢`,
+      description: `${team[0].teamname}使用了實質平等, 與${teams[order + 1].teamname
+        }平分金錢`,
     });
   }
   res.json("Success").status(200);
