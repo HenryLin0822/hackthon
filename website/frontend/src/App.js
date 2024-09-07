@@ -9,6 +9,7 @@ import Notifications from "./components/Notifications";
 import Teams from "./components/Teams/Teams";
 import Login from "./components/Login";
 import AddMoney from "./components/NPC/AddMoney";
+import MrtStation from "./components/hack/MrtStation";
 import Event from "./components/admin/Event";
 import Bank from "./components/admin/Bank";
 import PermissionDenied from "./components/PermissionDenied";
@@ -70,6 +71,7 @@ const App = () => {
               <Route path="addmoney" element={<AddMoney />} />
               <Route path="event" element={<Event />} />
               <Route path="loading" element={<Loading />} />
+              <Route path="mrtstation" element={<MrtStation />} />
               {/* <Route path="bank" element={<Bank />} /> */}
               <Route path="broadcast" element={<Broadcast />} />
             </Routes>

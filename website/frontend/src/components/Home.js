@@ -45,7 +45,7 @@ const Home = () => {
             marginBottom: "20px",
           }}
         >
-          EAT SHIT
+          roaMRT
         </Typography>
 
         <Grid container spacing={2}>
