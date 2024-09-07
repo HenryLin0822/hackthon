@@ -36,7 +36,26 @@ const MrtStation = () => {
   const getStationText = (station) => {
     switch(station){
       case "中正紀念堂":
-        return "今日進出站人次預測: 1000人";
+        return "今日進出站人次預測: 12764人 寬敞";
+      case "動物園":
+        return "今日進出站人次預測: 2917人 普通";
+      case "北門":
+        return "今日進出站人次預測: 8816人 普通";
+      case "台北101世貿":
+        return "今日進出站人次預測: 32045人 普通";
+      case "國父紀念館":
+        return "今日進出站人次預測: 17847人 寬敞";
+      case "士林":
+        return "今日進出站人次預測: 9618人 寬敞";
+      case "大安森林公園":
+        return "今日進出站人次預測: 5661人 寬敞";
+      case "小南門":
+        return "今日進出站人次預測: 5261人 普通";
+      case "西門":
+        return "今日進出站人次預測: 38469人 寬敞";
+      case "龍山寺":
+        return "今日進出站人次預測: 11914人 寬敞";
+      
       default:
         return "請選擇一個站點以查看今日進出站人次預測"
 
@@ -87,8 +106,10 @@ const MrtStation = () => {
             fontSize: "1rem", // 根据需要调整字体大小
             fontWeight: "bold", // 粗体
             letterSpacing: "0.1rem",
+            padding: "5px",
             animation: `fadeIn 5s ease-in-out`, // 动画名称和持续时间
             textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // 添加文字阴影效果
+            backdropFilter: "blur(5px)",
             "@keyframes fadeIn": {
               from: { opacity: 0 }, // 动画从透明开始
               to: { opacity: 1 }, // 动画结束时完全可见
