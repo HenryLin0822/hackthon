@@ -53,10 +53,13 @@ const TaipeiMRTGreenLineMap = ({ onStationSelect }) => {
                         />
                         <text
                             x={station.x}
-                            y={station.y + 20}
+                            y={station.y}
                             fontSize="10"
+                            fill="white"
                             textAnchor="middle"
-                            fill="black"
+                            dominantBaseline="middle"
+                            fontWeight="bold"
+                            className="pointer-events-none"
                         >
                             {station.name}
                         </text>
