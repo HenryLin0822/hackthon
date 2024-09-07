@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Chatbot from "./hack/ChatBot";
 import TaipeiMRTMap from "./hack/TaipeiMRTMap";
+import "./Home.css";
 
 const Home = () => {
   const [data, setData] = useState("");
@@ -36,17 +37,36 @@ const Home = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
+          minHeight: "30vh",
         }}
       >
-        <Typography variant="h2" gutterBottom
+        <Typography variant="h1" gutterBottom
           sx={{
-            marginTop: "20px",
-            marginBottom: "20px",
+            color : "#FFFFFF",
+            marginTop: "40px",
+            marginBottom: "1px",
+            fontSize: "4rem", // Adjust the font size as needed
+            fontWeight: "bold", // Bold text
+            whiteSpace: "nowrap", // Prevent text from wrapping
+            overflow: "hidden", // Hide overflow during typing effect
+            // borderRight: ".05em solid black", // Cursor effect
+            width: "fit-content", // Ensure it only takes up the necessary width
+            animation: `typing 5s , blink-caret 0.75s step-end infinite`,
+            textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // Add shadow to the text
+            '@keyframes typing': {
+              from: { width: "1%" },
+              to: { width: "70%" }
+            },
+            '@keyframes blink-caret': {
+              '50%': { borderColor: "transparent" }
+            }
           }}
         >
           roaMRT
         </Typography>
+
+
+
 
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -58,6 +78,7 @@ const Home = () => {
                 alignItems: 'center',
                 borderRadius: "32px",
                 margin: "30px 40px",
+                marginBottom: "10px",
                 boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',
               }}
             >
