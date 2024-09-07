@@ -36,13 +36,29 @@ const MrtStation = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          minHeight: "100vh",
+          minHeight: "30vh",
         }}
       >
-        <Typography variant="h2" gutterBottom
+        <Typography variant="h1" gutterBottom
           sx={{
-            marginTop: "20px",
-            marginBottom: "20px",
+            color : "#FFFFFF",
+            marginTop: "40px",
+            marginBottom: "1px",
+            fontSize: "4rem", // Adjust the font size as needed
+            fontWeight: "bold", // Bold text
+            whiteSpace: "nowrap", // Prevent text from wrapping
+            overflow: "hidden", // Hide overflow during typing effect
+            // borderRight: ".05em solid black", // Cursor effect
+            width: "fit-content", // Ensure it only takes up the necessary width
+            animation: `typing 5s , blink-caret 0.75s step-end infinite`,
+            textShadow: "2px 2px 5px rgba(0, 0, 0, 0.5)", // Add shadow to the text
+            '@keyframes typing': {
+              from: { width: "1%" },
+              to: { width: "70%" }
+            },
+            '@keyframes blink-caret': {
+              '50%': { borderColor: "transparent" }
+            }
           }}
         >
           MrtStation
@@ -78,13 +94,13 @@ const MrtStation = () => {
                     },
                     margin: '20px auto',
                     padding: '20px',
-                    backgroundColor: 'background.paper', // 使用调色板中的背景颜色
-                    borderRadius: '12px', // 圆角
-                    boxShadow: 3, // 阴影效果
-                    transition: 'transform 0.3s ease-in-out', // 鼠标悬停时的过渡效果
+                    backgroundColor: 'background.paper', 
+                    borderRadius: '12px', 
+                    boxShadow: 3, 
+                    transition: 'transform 0.3s ease-in-out', 
                     '&:hover': {
-                      transform: 'scale(1.05)', // 鼠标悬停时放大
-                      boxShadow: 10, // 增加阴影
+                      transform: 'scale(1.05)',
+                      boxShadow: 10, 
                     },
                   }}
                 >
@@ -135,16 +151,6 @@ const MrtStation = () => {
           </Grid>
         </Grid>
 
-        <img
-          src="/banner.jpg"
-          alt="Avengers"
-          style={{
-            maxWidth: "100%",
-            userSelect: "none",
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        />
       </Box>
     </Container>
   );
