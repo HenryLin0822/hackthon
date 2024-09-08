@@ -5,6 +5,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import ChatIcon from '@mui/icons-material/Chat';
 import CloseIcon from '@mui/icons-material/Close';
+import MinimizeIcon from '@mui/icons-material/Minimize'; // Imported MinimizeIcon
 import axios from "../axios";
 
 const styles = {
@@ -77,14 +78,18 @@ const styles = {
         top: '10px',
         right: '10px',
     },
+    chatIcon: {
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        zIndex: 1000,
+    },
 };
 
-const ChatBot = (stationName) => {
+const ChatBot = ({ stationName }) => { // Destructuring stationName from props
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState([]);
-    // const [stationName, setStationName] = useState('');
-    const [chatState, setChatState] = useState('minimized'); // 'minimized', 'expanding', 'expanded', 'shrinking'
-    const [isContentVisible, setIsContentVisible] = useState(false);
+    const [chatState, setChatState] = useState('minimized'); // 'minimized', 'expanded'
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -99,23 +104,19 @@ const ChatBot = (stationName) => {
 
         setMessages(prev => [{ text: input, isUser: true }, ...prev]);
 
-        // alert("Station Name: " + stationName.stationName);
-        const Realname = stationName.stationName;
-        const payload = { stationName: Realname , question: input };
+        const payload = { stationName, question: input };
         console.log("Payload:", payload);
 
         try {
-            const response = await axios.post('/chatbot', payload);
+            await axios.post('/chatbot', payload);
             setInput('');
-            // alert("Response: " + JSON.stringify(response.data));
         } catch (error) {
             console.error('Error sending message:', error);
             setInput('');
         }
-
-        //sleep 2 second
         await new Promise(r => setTimeout(r, 5000));
 
+        // Wait for response
         axios
             .get("/getData")
             .then((res) => {
@@ -129,34 +130,21 @@ const ChatBot = (stationName) => {
     };
 
     const toggleChat = () => {
-        setIsExpanded(!isExpanded);
+        setChatState(prevState => prevState === 'minimized' ? 'expanded' : 'minimized');
     };
 
     return (
         <>
-            <Paper sx={chatStyle()} elevation={chatState !== 'minimized' ? 3 : 0}>
+            <Paper sx={{ ...styles.chatContainer, ...(chatState === 'minimized' && styles.minimizedChat) }} elevation={chatState !== 'minimized' ? 3 : 0}>
                 {chatState !== 'minimized' && (
                     <>
                         <Button 
                             onClick={toggleChat} 
-                            sx={{
-                                ...styles.minimizeButton,
-                                ...(isContentVisible ? styles.visibleMinimize : {})
-                            }}
+                            sx={styles.minimizeButton}
                         >
-                            <MinimizeIcon 
-                                fontSize="small" 
-                                sx={{
-                                    zIndex:1000,
-                                }}    
-                            />
+                            <MinimizeIcon fontSize="small" />
                         </Button>
-                        <Box 
-                            sx={{
-                                ...styles.messagesContainer,
-                                ...(isContentVisible ? styles.visibleMessages : {})
-                            }}
-                        >
+                        <Box sx={styles.messagesContainer}>
                             <div ref={messagesEndRef} />
                             {messages.map((message, index) => (
                                 <Box
@@ -179,21 +167,10 @@ const ChatBot = (stationName) => {
                             ))}
                         </Box>
                         <Box 
-                            sx={{
-                                ...styles.inputContainer,
-                                ...(isContentVisible ? styles.visibleInputs : {})
-                            }} 
+                            sx={styles.inputContainer} 
                             component="form" 
                             onSubmit={handleSubmit}
                         >
-                            {/* <TextField
-                                size="small"
-                                variant="outlined"
-                                value={stationName}
-                                onChange={(e) => setStationName(e.target.value)}
-                                placeholder="Station name"
-                                sx={styles.input}
-                            /> */}
                             <TextField
                                 size="small"
                                 fullWidth
@@ -225,8 +202,8 @@ const ChatBot = (stationName) => {
                     <ChatIcon />
                 </Fab>
             )}
-        </Box>
+        </>
     );
 };
 
-export default ChatBot; 
+export default ChatBot;

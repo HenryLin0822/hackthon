@@ -6,6 +6,7 @@ import ShowDataB from "./ShowDataB";
 import Chatbot from "./ChatBot";
 import TaipeiMRTMap from "./TaipeiMRTMap_red";
 import GoogleMap from "./GoogleMap";
+import ChartA from "./ChartA";
 
 const MRT_STATIONS = [
   "淡水", "紅樹林", "竹圍", "關渡", "忠義", "復興崗", "北投", "新北投", "奇岩", "唭哩岸",
