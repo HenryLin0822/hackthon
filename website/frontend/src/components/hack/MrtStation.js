@@ -4,8 +4,8 @@ import { Container, Box, Typography, Grid } from "@mui/material";
 import ShowDataA from "./ShowDataA";
 import ShowDataB from "./ShowDataB";
 import Chatbot from "./ChatBot";
-import TaipeiMRTMap from "./TaipeiMRTMap_red";
 import GoogleMap from "./GoogleMap";
+import ChartA from "./ChartA";
 
 const MRT_STATIONS = [
   "淡水", "紅樹林", "竹圍", "關渡", "忠義", "復興崗", "北投", "新北投", "奇岩", "唭哩岸",
@@ -59,10 +59,8 @@ const MrtStation = () => {
       
       default:
         return "請選擇一個站點以查看今日進出站人次預測"
-
     }
   }
-
   return (
     <Container component="main" disableGutters>
       <Box
@@ -120,7 +118,7 @@ const MrtStation = () => {
           {getStationText(selectedStation)}
         </Typography>
 
-        <Grid container spacing={2}>
+        <Grid container spacing={2} direction="column">
           <Grid item xs={12} md={6}>
             <Box
               sx={{
@@ -133,7 +131,7 @@ const MrtStation = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sx={{display: "flex",justifyContent: "center", alignItems: "center",}}>
+          <Grid item xs={12} sx={{display: "flex", justifyContent: "center", alignItems: "center",}}>
             <Box
               sx={{
                 height: "200px",
@@ -158,6 +156,10 @@ const MrtStation = () => {
             >
               <ShowDataA />
             </Box>
+          </Grid>
+
+          <Grid item xs={12} sx={{display: "flex", justifyContent: "center", alignItems: "center",}}>
+            <ChartA/>
           </Grid>
 
           <Grid item xs={12}>

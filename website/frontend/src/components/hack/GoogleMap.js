@@ -89,7 +89,7 @@ const GoogleMap = ({ searchQuery }) => {
       <div
         ref={googleMapRef}
         style={{
-          width: '100%',
+          width: '80%',
           height: '300px',
           borderRadius: '8px',
           boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.2)',

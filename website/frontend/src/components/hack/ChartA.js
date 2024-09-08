@@ -90,7 +90,8 @@ const ChartA = () => {
         borderRadius: '16px', // Rounded border
         border: '2px solid white', // White border
         overflow: 'hidden',
-        color: 'white' // Set all text inside to white
+        color: 'white', // Set all text inside to white
+        width:"80%",
       }}
     >
       <canvas ref={chartRef} />
