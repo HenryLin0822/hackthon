@@ -134,6 +134,21 @@ const MrtStation = () => {
             </Box>
           </Grid>
 
+          {/* display is stationName == 大安森林公園 */}
+          {selectedStation === "大安森林公園" && (
+            <Grid item xs={12} md={6}>
+              <Box
+                sx={{
+                  marginRight: "10px",
+                  marginLeft: "10px",
+                  // height: "400px",
+                }}
+              >
+                <ChartA />
+              </Box>
+            </Grid>
+          )}
+
           <Grid item xs={12} sx={{display: "flex",justifyContent: "center", alignItems: "center",}}>
             <Box
               sx={{
