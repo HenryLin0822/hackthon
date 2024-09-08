@@ -6,6 +6,7 @@ import ShowDataB from "./ShowDataB";
 import Chatbot from "./ChatBot";
 import GoogleMap from "./GoogleMap";
 import ChartA from "./ChartA";
+import ChartA from "./ChartA";
 
 const MRT_STATIONS = [
   "淡水", "紅樹林", "竹圍", "關渡", "忠義", "復興崗", "北投", "新北投", "奇岩", "唭哩岸",
@@ -131,7 +132,22 @@ const MrtStation = () => {
             </Box>
           </Grid>
 
-          <Grid item xs={12} sx={{display: "flex", justifyContent: "center", alignItems: "center",}}>
+          {/* display is stationName == 大安森林公園 */}
+          {selectedStation === "大安森林公園" && (
+            <Grid item xs={12} md={6}>
+              <Box
+                sx={{
+                  marginRight: "10px",
+                  marginLeft: "10px",
+                  // height: "400px",
+                }}
+              >
+                <ChartA />
+              </Box>
+            </Grid>
+          )}
+
+          <Grid item xs={12} sx={{display: "flex",justifyContent: "center", alignItems: "center",}}>
             <Box
               sx={{
                 height: "200px",
