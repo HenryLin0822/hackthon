@@ -12,7 +12,7 @@ import ChartA from "./ChartA";
 const MRT_STATIONS = [
   "淡水", "紅樹林", "竹圍", "關渡", "忠義", "復興崗", "北投", "新北投", "奇岩", "唭哩岸",
   "石牌", "明德", "芝山", "士林", "劍潭", "圓山", "民權西路", "雙連", "中山", "台北車站",
-  "台大醫院", "中正紀念堂", "東門", "大安森林公園", "大安", "信義安和", "台北101/世貿", "象山",
+  "台大醫院", "中正紀念堂", "東門", "大安森林公園", "大安", "信義安和", "台北101", "象山",
   // ... other MRT stations
 ];
 
@@ -104,7 +104,7 @@ const MrtStation = () => {
           gutterBottom
           sx={{
             color: "#FFFFFF",
-            fontSize: "1rem", // 根据需要调整字体大小
+            fontSize: "0.8rem", // 根据需要调整字体大小
             fontWeight: "bold", // 粗体
             letterSpacing: "0.1rem",
             padding: "5px",

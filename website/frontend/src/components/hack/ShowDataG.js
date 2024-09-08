@@ -7,7 +7,7 @@ const ShowDataA = () => {
 
     useEffect(() => {
         axios
-          .get("/getDataA")
+          .get("/getDataG")
           .then((res) => {
             setData(res.data.number);
           })
