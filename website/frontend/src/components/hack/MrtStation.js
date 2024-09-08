@@ -164,7 +164,7 @@ const MrtStation = () => {
 
           <Grid item xs={12}>
             <Box sx={{ marginTop: "20px", marginBottom: "20px", marginLeft: "10px", marginRight: "10px" }}>
-              <Chatbot />
+              <Chatbot stationName={stationName} />
             </Box>
           </Grid>
         </Grid>

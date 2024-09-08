@@ -33,7 +33,7 @@ router.get('/getData', (req, res) => {
 });
 
 router.get('/getDataA', (req, res) => {
-  const filePath = join(__dirname, '/data/a.txt');
+  const filePath = join(__dirname, '/introductions/中正紀念堂.txt');
   console.log("A");
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
@@ -55,10 +55,6 @@ router.get('/getDataB', (req, res) => {
     res.status(200).json({ number: data.trim() });
   });
 });
-
-
-
-
 
 
 router.post('/chatbot', async (req, res) => {

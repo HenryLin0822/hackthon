@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import PersonIcon from '@mui/icons-material/Person';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import ChatIcon from '@mui/icons-material/Chat';
-import MinimizeIcon from '@mui/icons-material/Minimize';
+import CloseIcon from '@mui/icons-material/Close';
 import axios from "../axios";
 
 const styles = {
@@ -12,30 +12,18 @@ const styles = {
         position: 'fixed',
         bottom: '20px',
         right: '20px',
+        width: '350px',
+        height: '500px',
         display: 'flex',
         flexDirection: 'column',
         borderRadius: '8px',
         overflow: 'hidden',
         boxShadow: '0 0 10px rgba(0,0,0,0.1)',
-        transition: 'all 0.5s ease',
-        zIndex: 1000,
-    },
-    expandedChat: {
-        width: 'calc(100% - 40px)',
-        height: '80vh',
-        maxWidth: '1200px',
-    },
-    shrinkingChat: {
-        width: '60px',
-        height: '60px',
-        borderRadius: '30px',
+        transition: 'all 0.3s ease',
     },
     minimizedChat: {
         width: '60px',
         height: '60px',
-        borderRadius: '30px',
-        backgroundColor: 'transparent',
-        boxShadow: 'none',
     },
     messagesContainer: {
         flexGrow: 1,
@@ -44,11 +32,6 @@ const styles = {
         backgroundColor: '#f5f5f5',
         display: 'flex',
         flexDirection: 'column-reverse',
-        opacity: 0,
-        transition: 'opacity 0.3s ease',
-    },
-    visibleMessages: {
-        opacity: 1,
     },
     messageWrapper: {
         display: 'flex',
@@ -81,11 +64,6 @@ const styles = {
         padding: '8px',
         backgroundColor: 'white',
         borderTop: '1px solid rgba(0, 0, 0, 0.12)',
-        opacity: 0,
-        transition: 'opacity 0.3s ease',
-    },
-    visibleInputs: {
-        opacity: 1,
     },
     input: {
         marginRight: '8px',
@@ -98,29 +76,13 @@ const styles = {
         position: 'absolute',
         top: '10px',
         right: '10px',
-        minWidth: '30px',
-        width: '30px',
-        height: '30px',
-        padding: 0,
-        opacity: 0,
-        transition: 'opacity 0.3s ease',
-    },
-    visibleMinimize: {
-        opacity: 1,
-    },
-    chatIcon: {
-        position: 'fixed',
-        bottom: '20px',
-        right: '20px',
-        transition: 'opacity 0.3s ease',
-        zIndex: 1000,
     },
 };
 
-const ChatBot = () => {
+const ChatBot = (stationName) => {
     const [input, setInput] = useState('');
     const [messages, setMessages] = useState([]);
-    const [stationName, setStationName] = useState('');
+    // const [stationName, setStationName] = useState('');
     const [chatState, setChatState] = useState('minimized'); // 'minimized', 'expanding', 'expanded', 'shrinking'
     const [isContentVisible, setIsContentVisible] = useState(false);
     const messagesEndRef = useRef(null);
@@ -137,15 +99,22 @@ const ChatBot = () => {
 
         setMessages(prev => [{ text: input, isUser: true }, ...prev]);
 
-        const payload = { stationName, question: input };
+        // alert("Station Name: " + stationName.stationName);
+        const Realname = stationName.stationName;
+        const payload = { stationName: Realname , question: input };
         console.log("Payload:", payload);
 
         try {
             const response = await axios.post('/chatbot', payload);
-            alert("Response: " + JSON.stringify(response.data));
+            setInput('');
+            // alert("Response: " + JSON.stringify(response.data));
         } catch (error) {
             console.error('Error sending message:', error);
+            setInput('');
         }
+
+        //sleep 2 second
+        await new Promise(r => setTimeout(r, 5000));
 
         axios
             .get("/getData")
@@ -160,32 +129,7 @@ const ChatBot = () => {
     };
 
     const toggleChat = () => {
-        if (chatState === 'expanded') {
-            setIsContentVisible(false);
-            setChatState('shrinking');
-            setTimeout(() => {
-                setChatState('minimized');
-            }, 500);
-        } else if (chatState === 'minimized') {
-            setChatState('expanding');
-            setTimeout(() => {
-                setChatState('expanded');
-                setIsContentVisible(true);
-            }, 50);
-        }
-    };
-
-    const chatStyle = () => {
-        switch (chatState) {
-            case 'expanded':
-                return {...styles.chatContainer, ...styles.expandedChat};
-            case 'shrinking':
-                return {...styles.chatContainer, ...styles.shrinkingChat};
-            case 'minimized':
-                return {...styles.chatContainer, ...styles.minimizedChat};
-            default:
-                return styles.chatContainer;
-        }
+        setIsExpanded(!isExpanded);
     };
 
     return (
@@ -200,7 +144,12 @@ const ChatBot = () => {
                                 ...(isContentVisible ? styles.visibleMinimize : {})
                             }}
                         >
-                            <MinimizeIcon fontSize="small" />
+                            <MinimizeIcon 
+                                fontSize="small" 
+                                sx={{
+                                    zIndex:1000,
+                                }}    
+                            />
                         </Button>
                         <Box 
                             sx={{
@@ -237,14 +186,14 @@ const ChatBot = () => {
                             component="form" 
                             onSubmit={handleSubmit}
                         >
-                            <TextField
+                            {/* <TextField
                                 size="small"
                                 variant="outlined"
                                 value={stationName}
                                 onChange={(e) => setStationName(e.target.value)}
                                 placeholder="Station name"
                                 sx={styles.input}
-                            />
+                            /> */}
                             <TextField
                                 size="small"
                                 fullWidth
@@ -276,8 +225,8 @@ const ChatBot = () => {
                     <ChatIcon />
                 </Fab>
             )}
-        </>
+        </Box>
     );
 };
 
-export default ChatBot;
+export default ChatBot; 
