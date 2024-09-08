@@ -2,12 +2,12 @@ import React, { useState, useContext , useEffect} from "react";
 import axios from "../axios";
 import { Typography } from "@mui/material";
 
-const ShowDataB = () => {
+const ShowDataA = () => {
     const [data, setData] = useState(-1);
 
     useEffect(() => {
         axios
-          .get("/getDataB")
+          .get("/getDataF")
           .then((res) => {
             setData(res.data.number);
           })
@@ -46,4 +46,4 @@ const ShowDataB = () => {
   );
 };
 
-export default ShowDataB;
+export default ShowDataA;

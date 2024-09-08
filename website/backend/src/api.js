@@ -45,7 +45,7 @@ router.get('/getDataA', (req, res) => {
 });
 
 router.get('/getDataB', (req, res) => {
-  const filePath = join(__dirname, '/data/b.txt');
+  const filePath = join(__dirname, '/introductions/台北市動物園.txt');
   console.log("b");
   fs.readFile(filePath, 'utf-8', (err, data) => {
     if (err) {
@@ -56,7 +56,65 @@ router.get('/getDataB', (req, res) => {
   });
 });
 
+router.get('/getDataC', (req, res) => {
+  const filePath = join(__dirname, '/introductions/北門.txt');
+  console.log("b");
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    res.status(200).json({ number: data.trim() });
+  });
+});
 
+router.get('/getDataD', (req, res) => {
+  const filePath = join(__dirname, '/introductions/台北101.txt');
+  console.log("b");
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    res.status(200).json({ number: data.trim() });
+  });
+});
+
+router.get('/getDataE', (req, res) => {
+  const filePath = join(__dirname, '/introductions/國父紀念館.txt');
+  console.log("b");
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    res.status(200).json({ number: data.trim() });
+  });
+});
+
+router.get('/getDataF', (req, res) => {
+  const filePath = join(__dirname, '/introductions/士林夜市.txt');
+  console.log("b");
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    res.status(200).json({ number: data.trim() });
+  });
+});
+
+router.get('/getDataG', (req, res) => {
+  const filePath = join(__dirname, '/introductions/大安森林公園.txt');
+  console.log("b");
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
+    }
+    res.status(200).json({ number: data.trim() });
+  });
+});
 router.post('/chatbot', async (req, res) => {
   const { stationName, question } = req.body;
 

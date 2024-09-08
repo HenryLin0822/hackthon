@@ -3,9 +3,10 @@ import { useParams } from "react-router-dom"; // Import useParams to get route p
 import { Container, Box, Typography, Grid } from "@mui/material";
 import ShowDataA from "./ShowDataA";
 import ShowDataB from "./ShowDataB";
+import ShowDataF from "./ShowDataF";
+import ShowDataG from "./ShowDataG";
 import Chatbot from "./ChatBot";
 import GoogleMap from "./GoogleMap";
-import ChartA from "./ChartA";
 import ChartA from "./ChartA";
 
 const MRT_STATIONS = [
@@ -133,7 +134,7 @@ const MrtStation = () => {
           </Grid>
 
           {/* display is stationName == 大安森林公園 */}
-          {selectedStation === "大安森林公園" && (
+          {/*selectedStation === "大安森林公園" && (
             <Grid item xs={12} md={6}>
               <Box
                 sx={{
@@ -145,7 +146,7 @@ const MrtStation = () => {
                 <ChartA />
               </Box>
             </Grid>
-          )}
+          )*/}
 
           <Grid item xs={12} sx={{display: "flex",justifyContent: "center", alignItems: "center",}}>
             <Box
@@ -170,7 +171,11 @@ const MrtStation = () => {
                 },
               }}
             >
-              <ShowDataA />
+              
+              {selectedStation === "中正紀念堂" && (<ShowDataA/>)}
+              {selectedStation === "動物園" && (<ShowDataB/>)}
+              {selectedStation === "士林"&& (<ShowDataF/>)}
+              {selectedStation === "大安森林公園"&& (<ShowDataG/>)}
             </Box>
           </Grid>
 
